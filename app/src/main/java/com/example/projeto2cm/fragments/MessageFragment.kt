@@ -93,15 +93,21 @@ class MessageFragment : Fragment() {
         queryUser.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 (mUser as ArrayList<User>).clear()
-                for (i in snapshot.children) {
-                    val user: User? = i.getValue(User::class.java)
-                    if (!(user!!.getUID()).equals(firebaseUserID)) {
-                        (mUser as ArrayList<User>).add(user)
-                        user.getEmail()?.let { Log.e("sdfgsf", it) }
+                if (searchUserField!!.text.toString() != "") {
+                    for (i in snapshot.children) {
+                        val user: User? = i.getValue(User::class.java)
+                        if (!(user!!.getUID()).equals(firebaseUserID)) {
+                            (mUser as ArrayList<User>).add(user)
+                            user.getEmail()?.let { Log.e("sdfgsf", it) }
+                        }
                     }
+                    userAdapter = UserAdapter(context!!, mUser!!, false)
+                    recyclerView!!.adapter = userAdapter
+                } else {
+                    (mUser as ArrayList<User>).clear()
+                    userAdapter = UserAdapter(context!!, mUser!!, false)
+                    recyclerView!!.adapter = userAdapter
                 }
-                userAdapter = UserAdapter(context!!, mUser!!, false)
-                recyclerView!!.adapter = userAdapter
             }
 
             override fun onCancelled(error: DatabaseError) {

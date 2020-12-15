@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#111845</color>
+    <color name="purple_500">#1B276E</color>
+    <color name="purple_700">#111845</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="dark_blue">#1B276E</color>
+    <color name="toolbar">#1B276E</color>
+    <color name="to_dark_blue">#111845</color>
+
+    <color name="text_color">#FF000000</color>
+    <color name="background_color">#FFFFFFFF</color>
+
+
+    <!-- New Colors-->
+
+    <color name="blue_200">#9ea8d1</color>
+    <color name="blue_300">#7886bf</color>
+    <color name="blue_500">#3e52a5</color>
+    <color name="blue_700">#2f418f</color>
+    <color name="blue_900">#1b266d</color>
+
+    <color name="light_blue_200">#a6aeff</color>
+    <color name="light_blue_300">#7e8cff</color>
+    <color name="light_blue_500">#3c53ff</color>
+    <color name="light_blue_700">#2c3de6</color>
+    <color name="light_blue_900">#0111ca</color>
+
+    <color name="white_50">#ffffff</color>
+    <color name="white_300">#f0f0f0</color>
+    <color name="white_400">#dedede</color>
+
+    <color name="black_900">#000000</color>
+    <color name="black_700">#434343</color>
+    <color name="black_500">#7b7b7b</color>
+
+    <color name="red_800">#d21414</color>
+    <color name="red_600">#f12d22</color>
+    <color name="red_400">#fb4c42</color>
+
+    <color name="green_800">#009e00</color>
+    <color name="green_500">#00d42a</color>
+    <color name="green_400">#14dc54</color>
+
+</resources>

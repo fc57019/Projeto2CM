@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/ic_home"
+        android:icon="@drawable/home_vector"
+        android:title="Home" />
+    <item
+        android:id="@+id/ic_health"
+        android:icon="@drawable/health_vector"
+        android:title="Health" />
+    <item
+        android:id="@+id/ic_messages"
+        android:icon="@drawable/sms_vector"
+        android:title="Messages" />
+    <item
+        android:id="@+id/ic_profile"
+        android:icon="@drawable/profile_vector"
+        android:title="Profile" />
+    <item
+        android:id="@+id/ic_settings"
+        android:icon="@drawable/settings_vector"
+        android:title="Settings" />
+
+</menu>

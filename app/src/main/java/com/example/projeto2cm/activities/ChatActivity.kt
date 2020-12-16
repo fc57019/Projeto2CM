@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -33,7 +34,8 @@ class ChatActivity : AppCompatActivity() {
     var userIdVisit: String = ""
     var fireBaseUser: FirebaseUser? = null
     var chatAdapter: ChatAdapter? = null
-    var chatList: List<Chat>? = null
+    var mchatList: List<Chat>? = null
+
     lateinit var recyclerViewChats: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,9 +77,10 @@ class ChatActivity : AppCompatActivity() {
         sendMessageBtn.setOnClickListener {
             val msg = textMsg.text.toString()
             if (msg == "") {
-                Toast.makeText(this, "Por favor escreva uma mensagem: ", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Por favor escreva uma mensagem: ", Toast.LENGTH_SHORT).show()
             } else {
                 sendMessageToUser(fireBaseUser?.uid, userIdVisit, msg)
+                Log.e("dsfsdfsfsfsf", "$msg")
             }
             textMsg.setText("")
         }
@@ -92,24 +95,24 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
-    private fun getAllMessages(senderId: String, receiverId: String, receiverImageUrl: String?) {
-        chatList = ArrayList()
+    private fun getAllMessages(senderId: String, receiverId: String?, receiverImageUrl: String?) {
+        mchatList = ArrayList()
         val reference = FirebaseDatabase.getInstance().reference.child("Chats")
 
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                (chatList as ArrayList<Chat>).clear()
+                (mchatList as ArrayList<Chat>).clear()
                 for (i in snapshot.children) {
                     val chat = i.getValue(Chat::class.java)
                     if (chat!!.getReceiver().equals(senderId) && chat.getSender()
                             .equals(receiverId) || chat.getReceiver()
                             .equals(receiverId) && chat.getSender().equals(senderId)
                     ) {
-                        (chatList as ArrayList<Chat>).add(chat)
+                        (mchatList as ArrayList<Chat>).add(chat)
                     }
                     chatAdapter = ChatAdapter(
                         this@ChatActivity,
-                        (chatList as ArrayList<Chat>),
+                        (mchatList as ArrayList<Chat>),
                         receiverImageUrl!!
                     )
                     recyclerViewChats.adapter = chatAdapter

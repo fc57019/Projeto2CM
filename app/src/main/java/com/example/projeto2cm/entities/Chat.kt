@@ -37,7 +37,7 @@ class Chat {
         return message
     }
 
-    fun setMessage(message: String) {
+    fun setMessage(message: String?) {
         this.message
     }
 
@@ -45,19 +45,23 @@ class Chat {
         return sender
     }
 
-    fun setReceiver(receiver: String) {
+    fun setReceiver(receiver: String?) {
         this.receiver
     }
 
-    fun isIsSeen(): Boolean{
+    fun isIsSeen(): Boolean?{
         return isseen
+    }
+
+    fun setIsSeen(isseen: Boolean?){
+        this.isseen = isseen!!
     }
 
     fun getURL(): String? {
         return url
     }
 
-    fun setURL(url: String) {
+    fun setURL(url: String?) {
         this.url
     }
 
@@ -65,7 +69,7 @@ class Chat {
         return messagerId
     }
 
-    fun setMessageID(messagerId: String) {
+    fun setMessageID(messagerId: String?) {
         this.messagerId
     }
 

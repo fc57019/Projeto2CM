@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ChatActivity"
+    android:background="#e6e6e6">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_chat"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:fitsSystemWindows="true">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/profile_pic"
+                android:layout_width="60dp"
+                android:padding="3dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/profile_pic" />
+
+            <TextView
+                android:id="@+id/username_chat"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="15dp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:text="Username"
+                android:layout_toRightOf="@+id/profile_pic">
+            </TextView>
+
+            <ImageButton
+                android:id="@+id/logout_btn"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/exit_vector" />
+        </RelativeLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_chat"
+        android:layout_above="@+id/relative_layout_bottom">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <RelativeLayout
+        android:id="@+id/relative_layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:padding="6dp"
+        android:background="#fff"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/attach_image_file_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/attach_file"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true">
+        </ImageView>
+
+        <EditText
+            android:id="@+id/text_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="Escreva uma mensagem aqui..."
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/attach_image_file_btn"
+            android:layout_toLeftOf="@+id/send_message_btn">
+        </EditText>
+
+        <ImageView
+            android:id="@+id/send_message_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/send"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true">
+        </ImageView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

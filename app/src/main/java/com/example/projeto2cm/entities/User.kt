@@ -1,4 +1,4 @@
-package com.example.projeto2cm
+package com.example.projeto2cm.entities
 
 class User {
     private var uid: String = ""

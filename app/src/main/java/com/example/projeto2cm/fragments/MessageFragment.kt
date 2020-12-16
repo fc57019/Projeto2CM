@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projeto2cm.R
-import com.example.projeto2cm.User
-import com.example.projeto2cm.UserAdapter
+import com.example.projeto2cm.entities.User
+import com.example.projeto2cm.adapters.UserAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

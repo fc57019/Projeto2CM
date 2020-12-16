@@ -16,12 +16,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
         if (!screenRotated(savedInstanceState)) {
             NavigationManager.goToHomeFragment(supportFragmentManager)
         }
-
 
         val bottomNavigationView =
             findViewById<BottomNavigationView>(R.id.bottom_navigation)?.setOnNavigationItemSelectedListener {

@@ -26,11 +26,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="@color/blue_900"
             android:padding="8dp"
             android:text="testing msg"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:background="@drawable/rounded_corner_right"/>
 
         <ImageView
             android:id="@+id/right_image_view"

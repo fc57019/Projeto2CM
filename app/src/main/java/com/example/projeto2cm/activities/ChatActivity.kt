@@ -155,10 +155,8 @@ class ChatActivity : AppCompatActivity() {
                         receiverImageUrl!!
                     )
                     recyclerViewChats.adapter = chatAdapter
-
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }

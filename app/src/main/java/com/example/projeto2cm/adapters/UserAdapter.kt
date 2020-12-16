@@ -47,24 +47,9 @@ class UserAdapter(context: Context, user: List<User>, isChatCheck: Boolean) :
         Picasso.get().load(user2.getProfile()).placeholder(R.drawable.profile_pic).into(holder.profileimg)
 
         holder.itemView.setOnClickListener {
-            val options = arrayOf<CharSequence>(
-                "Enviar Mensagem",
-                "Visitar Perfil"
-            )
-            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-            builder.setTitle("Escolha uma das seguintes opções:")
-            builder.setItems(options, DialogInterface.OnClickListener{ dialog, position ->
-                if (position == 0){
-                    val intent = Intent(context, ChatActivity::class.java)
-                    intent.putExtra("visit_id", user2.getUID())
-                    context.startActivity(intent)
-                }
-                if (position == 1){
-                    val m = (context as AppCompatActivity).supportFragmentManager
-                    NavigationManager.goToProfileFragment(m)
-                }
-            })
-            builder.show()
+            val intent = Intent(context, ChatActivity::class.java)
+            intent.putExtra("visit_id", user2.getUID())
+            context.startActivity(intent)
         }
     }
 

@@ -17,11 +17,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
         android:layout_toRightOf="@id/profile_image"
-        android:background="@color/black_700"
         android:padding="8dp"
         android:text="testing msg"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:background="@drawable/rounded_corner_left"/>
 
     <ImageView
         android:id="@+id/left_image_view"

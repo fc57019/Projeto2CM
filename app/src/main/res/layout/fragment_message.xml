@@ -27,6 +27,16 @@
         android:id="@+id/search_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/search_user_field"/>
+        android:layout_below="@+id/search_user_field" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_list"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Grupos"
+        android:textSize="22sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

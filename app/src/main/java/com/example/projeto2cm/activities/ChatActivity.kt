@@ -3,13 +3,17 @@ package com.example.projeto2cm.activities
 import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.projeto2cm.R
+import com.example.projeto2cm.adapters.ChatAdapter
+import com.example.projeto2cm.entities.Chat
 import com.example.projeto2cm.entities.User
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
@@ -28,6 +32,9 @@ class ChatActivity : AppCompatActivity() {
 
     var userIdVisit: String = ""
     var fireBaseUser: FirebaseUser? = null
+    var chatAdapter: ChatAdapter? = null
+    var chatList: List<Chat>? = null
+    lateinit var recyclerViewChats: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +44,15 @@ class ChatActivity : AppCompatActivity() {
         userIdVisit = intent.getStringExtra("visit_id").toString()
         fireBaseUser = FirebaseAuth.getInstance().currentUser
 
+        recyclerViewChats = findViewById(R.id.recycler_view_chats)
+        recyclerViewChats.setHasFixedSize(true)
+        var linearLayoutManager = LinearLayoutManager(applicationContext)
+        linearLayoutManager.stackFromEnd = true
+        recyclerViewChats.layoutManager = linearLayoutManager
+
         val reference = FirebaseDatabase.getInstance().reference
             .child("Users").child(userIdVisit)
-        reference.addValueEventListener(object : ValueEventListener{
+        reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user: User? = snapshot.getValue(User::class.java)
 
@@ -47,6 +60,8 @@ class ChatActivity : AppCompatActivity() {
                 usernameChat.text = user!!.getName()
                 val profilePic = findViewById<ImageView>(R.id.profile_pic)
                 Picasso.get().load(user.getProfile()).into(profilePic)
+
+                getAllMessages(fireBaseUser!!.uid, userIdVisit, user.getProfile())
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -73,8 +88,39 @@ class ChatActivity : AppCompatActivity() {
             val intent = Intent()
             intent.action = Intent.ACTION_GET_CONTENT
             intent.type = "image/*"
-            startActivityForResult(Intent.createChooser(intent,"Selecione uma Imagem"), 438)
+            startActivityForResult(Intent.createChooser(intent, "Selecione uma Imagem"), 438)
         }
+    }
+
+    private fun getAllMessages(senderId: String, receiverId: String, receiverImageUrl: String?) {
+        chatList = ArrayList()
+        val reference = FirebaseDatabase.getInstance().reference.child("Chats")
+
+        reference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                (chatList as ArrayList<Chat>).clear()
+                for (i in snapshot.children) {
+                    val chat = i.getValue(Chat::class.java)
+                    if (chat!!.getReceiver().equals(senderId) && chat.getSender()
+                            .equals(receiverId) || chat.getReceiver()
+                            .equals(receiverId) && chat.getSender().equals(senderId)
+                    ) {
+                        (chatList as ArrayList<Chat>).add(chat)
+                    }
+                    chatAdapter = ChatAdapter(
+                        this@ChatActivity,
+                        (chatList as ArrayList<Chat>),
+                        receiverImageUrl!!
+                    )
+                    recyclerViewChats.adapter = chatAdapter
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     private fun sendMessageToUser(senderId: String?, receiverId: String?, msg: String) {
@@ -101,9 +147,9 @@ class ChatActivity : AppCompatActivity() {
                         .child(userIdVisit)
 
                     //implement the push notifications using fcm
-                    chatsListReference.addListenerForSingleValueEvent(object : ValueEventListener{
+                    chatsListReference.addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
-                            if (!snapshot.exists()){
+                            if (!snapshot.exists()) {
                                 chatsListReference.child("id").setValue(userIdVisit)
                             }
                             val chatsListReceiverReference = FirebaseDatabase.getInstance()
@@ -128,7 +174,7 @@ class ChatActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 438 && resultCode == RESULT_OK && data!=null && data!!.data != null) {
+        if (requestCode == 438 && resultCode == RESULT_OK && data != null && data!!.data != null) {
             val loadingBar = ProgressDialog(this)
             loadingBar.setMessage("Por favor espere, a enviar mensagem...")
             loadingBar.show()
@@ -139,18 +185,18 @@ class ChatActivity : AppCompatActivity() {
             val msgPushId = ref.push().key
             val filePath = storageReference.child("$msgPushId.jpg")
 
-            var uploadTask : StorageTask<*>
+            var uploadTask: StorageTask<*>
             uploadTask = filePath.putFile(fileUri!!)
 
-            uploadTask.continueWithTask(Continuation <UploadTask.TaskSnapshot, Task<Uri>>{ task ->
-                if (!task.isSuccessful){
+            uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                if (!task.isSuccessful) {
                     task.exception?.let {
                         throw it
                     }
                 }
                 return@Continuation filePath.downloadUrl
             }).addOnCompleteListener { task ->
-                if (task.isSuccessful){
+                if (task.isSuccessful) {
 
                     val downloadUrl = task.result
                     val url = downloadUrl.toString()

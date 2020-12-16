@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ChatActivity"
-    android:background="#e6e6e6">
+    tools:context=".activities.ChatActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar_chat"
@@ -33,7 +32,6 @@
                 android:textStyle="bold"
                 android:layout_marginLeft="15dp"
                 android:gravity="center"
-                android:textColor="@android:color/white"
                 android:text="Username"
                 android:layout_toRightOf="@+id/profile_pic">
             </TextView>
@@ -50,6 +48,7 @@
     </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_chats"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_chat"
@@ -62,7 +61,6 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:padding="6dp"
-        android:background="#fff"
         android:layout_alignParentBottom="true">
 
         <ImageView

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projeto2cm.R
 import com.example.projeto2cm.adapters.UserAdapter
+import com.example.projeto2cm.adapters.UserAddAdapter
 import com.example.projeto2cm.entities.ChatList
 import com.example.projeto2cm.entities.User
 import com.google.firebase.auth.FirebaseAuth
@@ -27,7 +28,9 @@ class MessageFragment : Fragment() {
     lateinit var recyclerViewChatList: RecyclerView
     private var firebaseUser: FirebaseUser? = null
     private var userAdapter: UserAdapter? = null
+    private var userAddAdapter: UserAddAdapter? = null
     private var mUser: List<User>? = null
+    //private var userGroupChat: List<User>? = null
     private var usersChatList: List<ChatList>? = null
     private var recyclerView: RecyclerView? = null
     private var searchUserField: EditText? = null
@@ -65,8 +68,7 @@ class MessageFragment : Fragment() {
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
         usersChatList = ArrayList()
-        val ref =
-            FirebaseDatabase.getInstance().reference.child("ChatList").child(firebaseUser!!.uid)
+        val ref = FirebaseDatabase.getInstance().reference.child("ChatList").child(firebaseUser!!.uid)
         ref!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 (usersChatList as ArrayList).clear()
@@ -81,36 +83,7 @@ class MessageFragment : Fragment() {
                 TODO("Not yet implemented")
             }
         })
-
-
-
         return view
-    }
-
-    private fun getAllUsers() {
-        val firebaseUserID = FirebaseAuth.getInstance().currentUser?.uid
-        val refUser = FirebaseDatabase.getInstance().reference.child("Users")
-        refUser.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                (mUser as ArrayList<User>).clear()
-                if (searchUserField!!.text.toString() == "") {
-                    for (i in snapshot.children) {
-                        val user: User? = i.getValue(User::class.java)
-                        if (!(user!!.getUID()).equals(firebaseUserID)) {
-                            (mUser as ArrayList<User>).add(user)
-                        }
-                    }
-                    userAdapter = UserAdapter(context!!, mUser!!, false)
-                    recyclerView!!.adapter = userAdapter
-                }
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-
     }
 
     private fun searchForUser(str: String) {
@@ -132,12 +105,12 @@ class MessageFragment : Fragment() {
                             user.getEmail()?.let { Log.e("sdfgsf", it) }
                         }
                     }
-                    userAdapter = UserAdapter(context!!, mUser!!, false)
-                    recyclerView!!.adapter = userAdapter
+                    userAddAdapter = UserAddAdapter(context!!, mUser!!, false)
+                    recyclerView!!.adapter = userAddAdapter
                 } else {
                     (mUser as ArrayList<User>).clear()
-                    userAdapter = UserAdapter(context!!, mUser!!, false)
-                    recyclerView!!.adapter = userAdapter
+                    userAddAdapter = UserAddAdapter(context!!, mUser!!, false)
+                    recyclerView!!.adapter = userAddAdapter
                 }
             }
 
@@ -156,6 +129,7 @@ class MessageFragment : Fragment() {
                 for (i in snapshot.children) {
                     val user = i.getValue(User::class.java)
                     for (eachChatList in usersChatList!!) {
+                        Log.e("erro user", "${user!!.getUID().equals(eachChatList.getId())}")
                         if (user!!.getUID().equals(eachChatList.getId()))
                             (mUser as ArrayList).add(user!!)
                     }

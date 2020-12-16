@@ -30,7 +30,7 @@ class Chat {
     }
 
     fun setSender(sender: String?) {
-        this.sender
+        this.sender = sender!!
     }
 
     fun getMessage(): String? {
@@ -38,22 +38,22 @@ class Chat {
     }
 
     fun setMessage(message: String?) {
-        this.message
+        this.message = message!!
     }
 
     fun getReceiver(): String? {
-        return sender
+        return receiver
     }
 
     fun setReceiver(receiver: String?) {
-        this.receiver
+        this.receiver = receiver!!
     }
 
-    fun isIsSeen(): Boolean?{
+    fun isIsSeen(): Boolean? {
         return isseen
     }
 
-    fun setIsSeen(isseen: Boolean?){
+    fun setIsSeen(isseen: Boolean?) {
         this.isseen = isseen!!
     }
 
@@ -62,7 +62,7 @@ class Chat {
     }
 
     fun setURL(url: String?) {
-        this.url
+        this.url = url!!
     }
 
     fun getMessageID(): String? {
@@ -70,7 +70,7 @@ class Chat {
     }
 
     fun setMessageID(messagerId: String?) {
-        this.messagerId
+        this.messagerId = messagerId!!
     }
 
 }

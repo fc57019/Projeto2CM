@@ -33,29 +33,23 @@ class ChatAdapter(
     }
 
     inner class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var profileImage: ImageView? = null
-        var showTextMessage: TextView? = null
-        var leftImageView: ImageView? = null
-        var textSeen: TextView? = null
-        var rightImageView: ImageView? = null
-
-        init {
-            profileImage = itemView.findViewById(R.id.profile_image)
-            showTextMessage = itemView.findViewById(R.id.show_text_message)
-            leftImageView = itemView.findViewById(R.id.left_image_view)
-            textSeen = itemView.findViewById(R.id.text_seen)
-            rightImageView = itemView.findViewById(R.id.right_image_view)
-        }
+        var profileImage: ImageView? = itemView.findViewById(R.id.profile_image)
+        var showTextMessage: TextView? = itemView.findViewById(R.id.show_text_message)
+        var leftImageView: ImageView? = itemView.findViewById(R.id.left_image_view)
+        var textSeen: TextView? = itemView.findViewById(R.id.text_seen)
+        var rightImageView: ImageView? = itemView.findViewById(R.id.right_image_view)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
         return if (viewType == 1) {
             val view: View =
-                LayoutInflater.from(context).inflate(R.layout.message_item_right, parent, false)
+                LayoutInflater.from(context)
+                    .inflate(com.example.projeto2cm.R.layout.message_item_right, parent, false)
             ChatViewHolder(view)
         } else {
             val view: View =
-                LayoutInflater.from(context).inflate(R.layout.message_item_left, parent, false)
+                LayoutInflater.from(context)
+                    .inflate(com.example.projeto2cm.R.layout.message_item_left, parent, false)
             ChatViewHolder(view)
         }
     }

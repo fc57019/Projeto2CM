@@ -30,6 +30,7 @@
         android:layout_below="@+id/search_user_field" />
 
     <TextView
+        android:id="@+id/title_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/search_list"
@@ -38,5 +39,11 @@
         android:text="Grupos"
         android:textSize="22sp"
         android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chat_groups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_2" />
 
 </RelativeLayout>

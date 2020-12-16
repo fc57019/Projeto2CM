@@ -20,10 +20,7 @@ import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
@@ -31,30 +28,32 @@ import com.squareup.picasso.Picasso
 
 class ChatActivity : AppCompatActivity() {
 
+    lateinit var recyclerViewChats: RecyclerView
     var userIdVisit: String = ""
     var fireBaseUser: FirebaseUser? = null
     var chatAdapter: ChatAdapter? = null
     var mchatList: List<Chat>? = null
+    var reference: DatabaseReference? = null
 
-    lateinit var recyclerViewChats: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
+        recyclerViewChats = findViewById(R.id.recycler_view_chats)
+        recyclerViewChats.setHasFixedSize(true)
+        var linearLayoutManager = LinearLayoutManager(applicationContext)
+        recyclerViewChats.layoutManager = linearLayoutManager
+
+
         intent = intent
         userIdVisit = intent.getStringExtra("visit_id").toString()
         fireBaseUser = FirebaseAuth.getInstance().currentUser
 
-        recyclerViewChats = findViewById(R.id.recycler_view_chats)
-        recyclerViewChats.setHasFixedSize(true)
-        var linearLayoutManager = LinearLayoutManager(applicationContext)
-        linearLayoutManager.stackFromEnd = true
-        recyclerViewChats.layoutManager = linearLayoutManager
 
-        val reference = FirebaseDatabase.getInstance().reference
+        reference = FirebaseDatabase.getInstance().reference
             .child("Users").child(userIdVisit)
-        reference.addValueEventListener(object : ValueEventListener {
+        reference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user: User? = snapshot.getValue(User::class.java)
 
@@ -77,7 +76,11 @@ class ChatActivity : AppCompatActivity() {
         sendMessageBtn.setOnClickListener {
             val msg = textMsg.text.toString()
             if (msg == "") {
-                Toast.makeText(this, "Por favor escreva uma mensagem: ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@ChatActivity,
+                    "Por favor escreva uma mensagem: ",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 sendMessageToUser(fireBaseUser?.uid, userIdVisit, msg)
                 Log.e("dsfsdfsfsfsf", "$msg")
@@ -93,25 +96,61 @@ class ChatActivity : AppCompatActivity() {
             intent.type = "image/*"
             startActivityForResult(Intent.createChooser(intent, "Selecione uma Imagem"), 438)
         }
+        seenMessage(userIdVisit)
     }
 
     private fun getAllMessages(senderId: String, receiverId: String?, receiverImageUrl: String?) {
         mchatList = ArrayList()
         val reference = FirebaseDatabase.getInstance().reference.child("Chats")
+        Log.e("reference", reference.toString())
 
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+
+                Log.e("arraSize antes do clear", mchatList!!.size.toString())
                 (mchatList as ArrayList<Chat>).clear()
+                Log.e("arraSize depois do clear", mchatList!!.size.toString())
+
                 for (i in snapshot.children) {
                     val chat = i.getValue(Chat::class.java)
+                    Log.e(
+                        "condicao1", "${chat!!.getReceiver().equals(senderId)}"
+                    )
+                    Log.e(
+                        "condicao2", "${chat.getSender().equals(receiverId)}"
+                    )
+                    Log.e(
+                        "condicao3", "${chat.getReceiver().equals(receiverId)}"
+                    )
+                    Log.e(
+                        "condicao4", "${chat.getSender().equals(senderId)}"
+                    )
+                    Log.e(
+                        "chat!!.getReceiver()", "${chat!!.getReceiver()} lolo"
+                    )
+                    Log.e(
+                        "senderId", "${senderId}"
+                    )
+                    Log.e(
+                        "chat.getSender()", "${chat.getSender()} lolo"
+                    )
+                    Log.e(
+                        "receiverId", "${receiverId}"
+                    )
+
+
                     if (chat!!.getReceiver().equals(senderId) && chat.getSender()
                             .equals(receiverId) || chat.getReceiver()
                             .equals(receiverId) && chat.getSender().equals(senderId)
                     ) {
                         (mchatList as ArrayList<Chat>).add(chat)
                     }
+                    Log.e("array Size", mchatList!!.size.toString())
+                    //Log.e("array", "${mchatList.toString()}")
+                    recyclerViewChats.layoutManager =
+                        LinearLayoutManager(applicationContext)
                     chatAdapter = ChatAdapter(
-                        this@ChatActivity,
+                        applicationContext,
                         (mchatList as ArrayList<Chat>),
                         receiverImageUrl!!
                     )
@@ -218,5 +257,33 @@ class ChatActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    var seenListener: ValueEventListener? = null
+    private fun seenMessage(userId: String) {
+        val reference = FirebaseDatabase.getInstance().reference.child("Chats")
+        seenListener = reference!!.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (i in snapshot.children) {
+                    val chat = i.getValue(Chat::class.java)
+                    if (chat!!.getReceiver().equals(fireBaseUser!!.uid) && chat!!.getSender()
+                            .equals(userId)
+                    ) {
+                        val hashMap = HashMap<String, Any>()
+                        hashMap["isseen"] = true
+                        i.ref.updateChildren(hashMap)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        reference!!.removeEventListener(seenListener!!)
     }
 }

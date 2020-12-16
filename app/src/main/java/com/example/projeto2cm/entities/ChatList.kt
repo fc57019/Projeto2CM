@@ -14,6 +14,6 @@ class ChatList {
     }
 
     fun setId(id: String?) {
-        this.id
+        this.id = id!!
     }
 }

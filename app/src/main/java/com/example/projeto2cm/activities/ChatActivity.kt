@@ -4,7 +4,6 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -83,7 +82,6 @@ class ChatActivity : AppCompatActivity() {
                 ).show()
             } else {
                 sendMessageToUser(fireBaseUser?.uid, userIdVisit, msg)
-                Log.e("dsfsdfsfsfsf", "$msg")
             }
             textMsg.setText("")
         }
@@ -102,42 +100,14 @@ class ChatActivity : AppCompatActivity() {
     private fun getAllMessages(senderId: String, receiverId: String?, receiverImageUrl: String?) {
         mchatList = ArrayList()
         val reference = FirebaseDatabase.getInstance().reference.child("Chats")
-        Log.e("reference", reference.toString())
 
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                Log.e("arraSize antes do clear", mchatList!!.size.toString())
                 (mchatList as ArrayList<Chat>).clear()
-                Log.e("arraSize depois do clear", mchatList!!.size.toString())
 
                 for (i in snapshot.children) {
                     val chat = i.getValue(Chat::class.java)
-                    Log.e(
-                        "condicao1", "${chat!!.getReceiver().equals(senderId)}"
-                    )
-                    Log.e(
-                        "condicao2", "${chat.getSender().equals(receiverId)}"
-                    )
-                    Log.e(
-                        "condicao3", "${chat.getReceiver().equals(receiverId)}"
-                    )
-                    Log.e(
-                        "condicao4", "${chat.getSender().equals(senderId)}"
-                    )
-                    Log.e(
-                        "chat!!.getReceiver()", "${chat!!.getReceiver()} lolo"
-                    )
-                    Log.e(
-                        "senderId", "${senderId}"
-                    )
-                    Log.e(
-                        "chat.getSender()", "${chat.getSender()} lolo"
-                    )
-                    Log.e(
-                        "receiverId", "${receiverId}"
-                    )
-
 
                     if (chat!!.getReceiver().equals(senderId) && chat.getSender()
                             .equals(receiverId) || chat.getReceiver()
@@ -145,7 +115,7 @@ class ChatActivity : AppCompatActivity() {
                     ) {
                         (mchatList as ArrayList<Chat>).add(chat)
                     }
-                    Log.e("array Size", mchatList!!.size.toString())
+                    //Log.e("array Size", mchatList!!.size.toString())
                     //Log.e("array", "${mchatList.toString()}")
                     recyclerViewChats.layoutManager =
                         LinearLayoutManager(applicationContext)
@@ -157,6 +127,7 @@ class ChatActivity : AppCompatActivity() {
                     recyclerViewChats.adapter = chatAdapter
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }

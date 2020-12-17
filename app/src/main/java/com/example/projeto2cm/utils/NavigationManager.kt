@@ -21,24 +21,28 @@ class NavigationManager {
                 HomeFragment()
             )
         }
+
         fun goToHealthFragment(fm: FragmentManager) {
             placeFragment(
                 fm,
                 HealthFragment()
             )
         }
+
         fun goToProfileFragment(fm: FragmentManager) {
             placeFragment(
                 fm,
                 ProfileFragment()
             )
         }
+
         fun goToSettingFragment(fm: FragmentManager) {
             placeFragment(
                 fm,
                 SettingFragment()
             )
         }
+
         fun goToMessageFragment(fm: FragmentManager) {
             placeFragment(
                 fm,

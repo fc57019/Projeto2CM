@@ -18,7 +18,8 @@
         <item name="colorOnSurface">@color/white_50</item>
         <item name="colorOnError">@color/black_900</item>
 
-        <!-- trocar no fim, esta assim so para testar -->
+        <item name="cardBackgroundColor">@color/blue_200</item>
+        <item name="cardForegroundColor">@color/black_700</item>
 
         <item name="android:statusBarColor">@color/blue_900</item>
     </style>

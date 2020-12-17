@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,18 +17,31 @@
         android:textSize="22sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/search_user_field"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lavel"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_view"
-        android:hint="Search" />
+        android:layout_margin="4dp"
+        android:hint="Search"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:placeholderText="Search">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_user_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/search_user_field" />
+        android:layout_below="@+id/lavel" />
 
     <TextView
         android:id="@+id/title_2"

@@ -17,11 +17,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
         android:layout_toRightOf="@id/profile_image"
+        android:background="@drawable/rounded_corner_left"
         android:padding="8dp"
         android:text="testing msg"
         android:textColor="@color/white"
-        android:textSize="18sp"
-        android:background="@drawable/rounded_corner_left"/>
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/left_image_view"
@@ -37,6 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/show_text_message"
         android:text="seen"
-        android:textColor="@color/black_700" />
+        android:textColor="?attr/colorOnBackground" />
 
 </RelativeLayout>

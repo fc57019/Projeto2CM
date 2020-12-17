@@ -12,7 +12,6 @@
         <item name="colorSurface">@color/white_50</item>
         <item name="colorError">@color/red_600</item>
 
-
         <item name="colorOnPrimary">@color/white_50</item>
         <item name="colorOnSecondary">@color/black_900</item>
         <item name="colorOnBackground">@color/black_900</item>
@@ -22,6 +21,8 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/blue_900</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">?attr/backgroundColor</item>
 
+        <item name="cardBackgroundColor">@color/blue_700</item>
+        <item name="cardForegroundColor">@color/black_500</item>
 
     </style>
 

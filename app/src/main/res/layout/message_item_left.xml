@@ -37,6 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/show_text_message"
         android:text="seen"
-        android:textColor="?attr/colorOnBackground" />
+        android:textColor="@color/black_700" />
 
 </RelativeLayout>

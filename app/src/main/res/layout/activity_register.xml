@@ -133,6 +133,21 @@
                 android:src="@drawable/t" />
         </LinearLayout>
 
+        <RelativeLayout
+            android:id="@+id/regist_visi"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="60dp"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:id="@+id/indeterminateBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
     </LinearLayout>
 
 

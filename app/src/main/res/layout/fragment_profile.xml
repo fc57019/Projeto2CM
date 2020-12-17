@@ -107,7 +107,7 @@
         app:endIconMode="clear_text"
         app:errorEnabled="true"
         app:helperTextEnabled="true"
-        app:placeholderText="Nome">
+        app:placeholderText="Data">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/profile_date"
@@ -138,7 +138,7 @@
                 app:endIconMode="clear_text"
                 app:errorEnabled="true"
                 app:helperTextEnabled="true"
-                app:placeholderText="Nome">
+                app:placeholderText="Peso">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/profile_weight"
@@ -157,7 +157,7 @@
                 app:endIconMode="clear_text"
                 app:errorEnabled="true"
                 app:helperTextEnabled="true"
-                app:placeholderText="Nome">
+                app:placeholderText="Altura">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/profile_height"

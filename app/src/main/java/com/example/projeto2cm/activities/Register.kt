@@ -4,10 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RelativeLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projeto2cm.R
 import com.google.firebase.auth.FirebaseAuth
@@ -32,6 +29,15 @@ class RegisterActivity : AppCompatActivity() {
             registUser()
             state.visibility = View.VISIBLE
         }
+
+        val registoGoogle: ImageView = findViewById(R.id.regist_google)
+        registoGoogle.setOnClickListener {
+            registoGoogleUser()
+        }
+    }
+
+    private fun registoGoogleUser() {
+        TODO("Not yet implemented")
     }
 
     private fun registUser() {

@@ -42,6 +42,8 @@ class ChatActivity : AppCompatActivity() {
         recyclerViewChats = findViewById(R.id.recycler_view_chats)
         recyclerViewChats.setHasFixedSize(true)
         var linearLayoutManager = LinearLayoutManager(applicationContext)
+        linearLayoutManager.reverseLayout = true
+        linearLayoutManager.stackFromEnd = true
         recyclerViewChats.layoutManager = linearLayoutManager
 
 
@@ -117,8 +119,7 @@ class ChatActivity : AppCompatActivity() {
                     }
                     //Log.e("array Size", mchatList!!.size.toString())
                     //Log.e("array", "${mchatList.toString()}")
-                    recyclerViewChats.layoutManager =
-                        LinearLayoutManager(applicationContext)
+                    recyclerViewChats.layoutManager = LinearLayoutManager(applicationContext)
                     chatAdapter = ChatAdapter(
                         applicationContext,
                         (mchatList as ArrayList<Chat>),

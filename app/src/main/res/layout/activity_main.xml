@@ -46,8 +46,26 @@
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_navigation"
+        android:layout_below="@+id/toolbar">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="30dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:elevation="5dp"
+            android:src="@drawable/run_vector_30"
+            app:backgroundTint="?attr/colorPrimary"
+            app:borderWidth="5dp"
+            app:fabCustomSize="60dp"
+            app:pressedTranslationZ="12dp" />
+
+    </FrameLayout>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

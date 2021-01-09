@@ -8,28 +8,53 @@
     android:padding="16dp"
     tools:context=".fragments.HomeFragment">
 
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:gravity="center"
-        android:text="@string/achivements"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:gravity="center"
+            android:text="@string/achievements"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/info_achievement"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@drawable/info_vector" />
+
+    </LinearLayout>
+
 
     <TextView
+        android:id="@+id/Sistema_de_pontos_por_competição"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="10dp"
         android:text="Sistema de pontos por competição"
         android:textSize="16dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/Sistema_de_pontos_por_competição_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/cardBackgroundColor"
         android:elevation="10dp"
+        android:visibility="gone"
         app:cardCornerRadius="12dp">
 
         <LinearLayout
@@ -115,19 +140,23 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
+        android:id="@+id/sistema_de_pontos_por_passos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="10dp"
         android:text="Sistema de Pontos por Passos"
         android:textSize="16dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/sistema_de_pontos_por_passos_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/cardBackgroundColor"
         android:elevation="10dp"
+        android:visibility="gone"
         app:cardCornerRadius="12dp">
 
         <LinearLayout

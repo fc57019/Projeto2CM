@@ -49,6 +49,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        moveTaskToBack(true)
+    }
+
     private fun screenRotated(savedInstanceState: Bundle?): Boolean {
         return savedInstanceState != null
     }

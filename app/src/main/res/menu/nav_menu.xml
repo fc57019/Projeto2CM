@@ -11,8 +11,8 @@
         android:title="Health" />
     <item
         android:id="@+id/ic_messages"
-        android:icon="@drawable/sms_vector"
-        android:title="Messages" />
+        android:icon="@drawable/family_vector"
+        android:title="Family Chat" />
     <item
         android:id="@+id/ic_profile"
         android:icon="@drawable/profile_vector"

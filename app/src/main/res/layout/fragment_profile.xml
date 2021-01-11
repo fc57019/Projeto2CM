@@ -17,12 +17,21 @@
         android:textSize="22sp"
         android:textStyle="bold" />
 
+
+    <ImageView
+        android:id="@+id/edit_profile_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:src="@drawable/edit_vector" />
+
     <ImageView
         android:id="@+id/profile_pic"
         android:layout_width="wrap_content"
         android:layout_height="150dp"
         android:layout_gravity="center"
         android:src="@drawable/profile_pic" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

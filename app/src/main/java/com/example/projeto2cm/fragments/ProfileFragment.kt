@@ -1,5 +1,9 @@
 package com.example.projeto2cm.fragments
 
+import android.app.Activity
+import android.app.ProgressDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,9 +13,15 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.projeto2cm.R
 import com.example.projeto2cm.entities.User
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.StorageTask
+import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 
 
@@ -21,6 +31,10 @@ class ProfileFragment : Fragment() {
 
     var refUser: DatabaseReference? = null
     var firebaseUser: FirebaseUser? = null
+    private val RequestCode = 438
+    private var imageUrl: Uri? = null
+    private var storageRef: StorageReference? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -125,11 +139,68 @@ class ProfileFragment : Fragment() {
             refUser?.updateChildren(mapGenre)
 
             Log.e("fdsbugdsuansfsfg", "drop ${editTextFilledExposedDropdownGenre.text.toString()}")
+        }
 
+        val editProfilePic: ImageView = view.findViewById(R.id.edit_profile_pic)
+        val profilePic: ImageView = view.findViewById(R.id.profile_pic)
 
+        storageRef = FirebaseStorage.getInstance().reference.child("User Images")
+
+        editProfilePic.setOnClickListener {
+            changeImage()
+        }
+
+        profilePic.setOnClickListener {
+            changeImage()
         }
 
         return view
+    }
+
+    private fun changeImage() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent, RequestCode)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RequestCode && resultCode == Activity.RESULT_OK && data?.data != null) {
+            imageUrl = data.data
+            Toast.makeText(context, "Upload...", Toast.LENGTH_LONG).show()
+            uploadImage()
+        }
+    }
+
+    private fun uploadImage() {
+        val progressBar = ProgressDialog(context)
+        progressBar.setMessage("Uploading image, please wait...")
+        progressBar.show()
+
+        if (imageUrl != null) {
+            val fileRef = storageRef!!.child(System.currentTimeMillis().toString() + ".jpg")
+            var uploadTask: StorageTask<*>
+            uploadTask = fileRef.putFile(imageUrl!!)
+            uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri?>> { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                return@Continuation fileRef.downloadUrl
+            }).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val downloadUrl = task.result
+                    val url = downloadUrl.toString()
+                    val map = HashMap<String, Any>()
+                    map["profile"] = url
+                    refUser!!.updateChildren(map)
+                    progressBar.dismiss()
+                }
+            }
+        }
     }
 
 }

@@ -31,6 +31,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity android:name=".activities.ViewFullImageActivity" />
         <activity android:name=".activities.ChatActivity" />
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.Login" />

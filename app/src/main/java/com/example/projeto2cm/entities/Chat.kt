@@ -7,6 +7,7 @@ class Chat {
     private var isseen = false
     private var url: String = ""
     private var messagerId: String = ""
+    private var du: String = ""
 
     constructor()
     constructor(
@@ -15,7 +16,8 @@ class Chat {
         receiver: String,
         isseen: Boolean,
         url: String,
-        messagerId: String
+        messagerId: String,
+        du: String
     ) {
         this.sender = sender
         this.message = message
@@ -23,6 +25,15 @@ class Chat {
         this.isseen = isseen
         this.url = url
         this.messagerId = messagerId
+        this.du = du
+    }
+
+    fun getDu(): String? {
+        return du
+    }
+
+    fun setDu(du: String) {
+        this.du = du!!
     }
 
     fun getSender(): String? {
@@ -72,5 +83,10 @@ class Chat {
     fun setMessageID(messagerId: String?) {
         this.messagerId = messagerId!!
     }
+
+    /*
+    override fun toString(): String {
+        return "Mensagem :             $messagerId, $message"
+    }*/
 
 }

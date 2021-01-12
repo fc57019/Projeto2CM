@@ -35,7 +35,6 @@ class ChatActivity : AppCompatActivity() {
 
     lateinit var recyclerViewChats: RecyclerView
     var userIdVisit: String = ""
-    var messageId: String = ""
     var fireBaseUser: FirebaseUser? = null
     var chatAdapter: ChatAdapter? = null
     var mchatList: List<Chat>? = null
@@ -62,7 +61,6 @@ class ChatActivity : AppCompatActivity() {
 
         intent = intent
         userIdVisit = intent.getStringExtra("visit_id").toString()
-        messageId = intent.getStringExtra("messageId").toString()
         fireBaseUser = FirebaseAuth.getInstance().currentUser
 
 
@@ -74,7 +72,6 @@ class ChatActivity : AppCompatActivity() {
 
                 val usernameChat = findViewById<TextView>(R.id.username_chat)
                 usernameChat?.text = user!!.getName()
-                Log.e("console log", "${usernameChat!!.text}")
                 val profilePic = findViewById<ImageView>(R.id.profile_pic)
                 Picasso.get().load(user.getProfile()).into(profilePic)
 
@@ -91,9 +88,7 @@ class ChatActivity : AppCompatActivity() {
         val textMsg = findViewById<EditText>(R.id.text_message)
 
         sendMessageBtn.setOnClickListener {
-            Log.e("estado ", notify.toString())
             notify = true
-            Log.e("estado 1", notify.toString())
             val msg = textMsg.text.toString()
             if (msg == "") {
                 Toast.makeText(
@@ -137,18 +132,15 @@ class ChatActivity : AppCompatActivity() {
                     ) {
                         (mchatList as ArrayList<Chat>).add(chat)
                     }
-                    //Log.e("array Size", mchatList!!.size.toString())
-                    //Log.e("array", "${mchatList.toString()}")
                     recyclerViewChats.layoutManager = LinearLayoutManager(applicationContext)
                     chatAdapter = ChatAdapter(
-                        applicationContext,
+                        this@ChatActivity,
                         (mchatList as ArrayList<Chat>),
                         receiverImageUrl!!
                     )
                     recyclerViewChats.adapter = chatAdapter
                 }
                 var x = mchatList?.size!!
-                Log.e("x", x.toString())
                 recyclerViewChats.smoothScrollToPosition(x)
 
             }
@@ -170,6 +162,7 @@ class ChatActivity : AppCompatActivity() {
         messageHashMap["isseen"] = false
         messageHashMap["url"] = ""
         messageHashMap["messagerId"] = msgKey
+        messageHashMap["du"] = msgKey.toString()
 
         reference.child("Chats")
             .child(msgKey!!)
@@ -202,6 +195,7 @@ class ChatActivity : AppCompatActivity() {
 
                 }
             }
+
         val userReference = FirebaseDatabase.getInstance().reference
             .child("Users").child(fireBaseUser!!.uid)
         userReference.addValueEventListener(object : ValueEventListener {
@@ -232,8 +226,7 @@ class ChatActivity : AppCompatActivity() {
                         R.mipmap.ic_launcher,
                         "$userName: $msg",
                         "New Message",
-                        userIdVisit,
-                        messageId
+                        userIdVisit
                     )
 
                     val sender = Sender(data!!, token!!.getToken().toString())
@@ -304,6 +297,7 @@ class ChatActivity : AppCompatActivity() {
                     messageHashMap["isseen"] = false
                     messageHashMap["url"] = url
                     messageHashMap["messagerId"] = msgPushId
+                    messageHashMap["du"] = msgPushId.toString()
 
                     ref.child("Chats").child(msgPushId!!).setValue(messageHashMap)
                         .addOnCompleteListener { task ->

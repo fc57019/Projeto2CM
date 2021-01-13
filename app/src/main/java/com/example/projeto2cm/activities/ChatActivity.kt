@@ -5,10 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -112,6 +109,13 @@ class ChatActivity : AppCompatActivity() {
             startActivityForResult(Intent.createChooser(intent, "Selecione uma Imagem"), 438)
         }
         seenMessage(userIdVisit)
+
+        val logout: ImageButton = findViewById(R.id.logout_btn)
+        logout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(applicationContext, SplashScreen::class.java))
+        }
+
     }
 
     private fun getAllMessages(senderId: String, receiverId: String?, receiverImageUrl: String?) {

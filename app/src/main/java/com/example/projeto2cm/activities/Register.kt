@@ -2,7 +2,6 @@ package com.example.projeto2cm.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -53,7 +52,6 @@ class RegisterActivity : AppCompatActivity() {
         } else if (passwordLabel.isEmpty() || password2Label.isEmpty() || passwordLabel != password2Label) {
             Toast.makeText(this, "Passwords diferentes", Toast.LENGTH_LONG).show()
         } else {
-            Log.e("dfsdfsd", "email ${emailLabel.toString()} e pass ${passwordLabel}")
             firebaseAuth.createUserWithEmailAndPassword(emailLabel, passwordLabel)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {

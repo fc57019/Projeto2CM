@@ -9,16 +9,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projeto2cm.R
 import com.example.projeto2cm.utils.NavigationManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.fitness.Fitness
-import com.google.android.gms.fitness.data.DataPoint
-import com.google.android.gms.fitness.data.DataSource
-import com.google.android.gms.fitness.data.DataType
-import com.google.android.gms.fitness.data.Value
+import com.google.android.gms.fitness.data.*
 import com.google.android.gms.fitness.request.DataSourcesRequest
 import com.google.android.gms.fitness.request.OnDataPointListener
 import com.google.android.gms.fitness.request.SensorRequest
@@ -139,8 +137,9 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
                 }
             }
 
-        Fitness.SensorsApi.findDataSources(mApiClient, dataSourceRequest)
-            .setResultCallback(dataSourcesResultCallback)
+      /*  Fitness.SensorsApi.findDataSources(mApiClient, dataSourceRequest)
+            .setResultCallback(dataSourcesResultCallback)*/
+
 
         val dataSourceRequest1 = DataSourcesRequest.Builder()
             .setDataTypes(DataType.TYPE_DISTANCE_DELTA)
@@ -156,8 +155,8 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
                 }
             }
 
-        Fitness.SensorsApi.findDataSources(mApiClient, dataSourceRequest1)
-            .setResultCallback(dataSourcesResultCallback1)
+       /* Fitness.SensorsApi.findDataSources(mApiClient, dataSourceRequest1)
+            .setResultCallback(dataSourcesResultCallback1)*/
     }
 
     private fun registerFitnessDataListener(dataSource: DataSource, dataType: DataType) {

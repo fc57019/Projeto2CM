@@ -41,7 +41,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun registUser() {
         val nameLabel: String = findViewById<EditText>(R.id.name_regist_label).text.toString()
-        val emailLabel: String = findViewById<EditText>(R.id.email_regist_label).text.toString()
+        val emailLabel: String = findViewById<EditText>(R.id.email_regist_label).text.toString().replace(" ","")
         val passwordLabel: String =
             findViewById<EditText>(R.id.password_regist_label).text.toString()
         val password2Label: String =

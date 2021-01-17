@@ -84,14 +84,20 @@ class ProfileFragment : Fragment() {
                     val weight1 = user?.getWeight()
                     val height1 = user?.getHeight()
                     val pic1 = user?.getProfile()
-
+                    val genre1 = user?.getGenre()
+                    val steps1 = user?.getSteps()
 
                     Picasso.get().load(pic1).into(pic)
                     name?.setText(name1)
                     date?.setText(date1)
                     weight?.setText(weight1.toString())
                     height?.setText(height1.toString())
-
+                    if(!genre1.equals("genero")){
+                        editTextFilledExposedDropdownGenre.setText(genre1,false)
+                    }
+                    if(!steps1.equals("0")){
+                        editTextFilledExposedDropdownSteps.setText(steps1,false)
+                    }
                     Log.e("USER", "$name1")
                 }
             }
@@ -136,9 +142,9 @@ class ProfileFragment : Fragment() {
 
             val mapGenre = HashMap<String, Any>()
             mapGenre["genre"] = editTextFilledExposedDropdownGenre.text.toString()
+            println(mapGenre)
+            println(editTextFilledExposedDropdownGenre.text.toString())
             refUser?.updateChildren(mapGenre)
-
-            Log.e("fdsbugdsuansfsfg", "drop ${editTextFilledExposedDropdownGenre.text.toString()}")
         }
 
         val editProfilePic: ImageView = view.findViewById(R.id.edit_profile_pic)

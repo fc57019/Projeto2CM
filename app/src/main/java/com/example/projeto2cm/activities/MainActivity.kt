@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projeto2cm.R
+import com.example.projeto2cm.fragments.stepsView
 import com.example.projeto2cm.utils.NavigationManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.ConnectionResult
@@ -25,9 +26,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
+var STEPS: Long? = 0L!!
 
 class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener {
+
 
     private val REQUEST_OAUTH = 1
     private var count: Int = 0
@@ -78,6 +81,8 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
             FirebaseAuth.getInstance().signOut()
             startActivity(Intent(applicationContext, SplashScreen::class.java))
         }
+
+
     }
 
     override fun onStart() {
@@ -118,6 +123,8 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
                     Toast.LENGTH_SHORT
                 ).show()
                 Log.e("111111", "Field: " + field.name.toString() + " Value: " + value)
+                STEPS = value.toString().toLong()
+                stepsView?.text = STEPS.toString() + " Daily Steps"
             }
         }
     }

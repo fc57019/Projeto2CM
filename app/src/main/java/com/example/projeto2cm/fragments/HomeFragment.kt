@@ -9,6 +9,9 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.example.projeto2cm.R
+import com.example.projeto2cm.activities.STEPS
+
+var stepsView: TextView? = null
 
 class HomeFragment : Fragment() {
 
@@ -21,6 +24,9 @@ class HomeFragment : Fragment() {
         info?.setOnClickListener {
             openInfo()
         }
+        stepsView = view.findViewById(R.id.daily_steps)
+        stepsView?.text = STEPS.toString() + "Daily Steps"
+
         return view
     }
 

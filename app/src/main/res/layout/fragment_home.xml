@@ -256,13 +256,12 @@
 
 
                 <TextView
-                    android:id="@+id/text2"
+                    android:id="@+id/daily_steps"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/image2"
                     android:gravity="center_vertical"
-                    android:text="0 Passos diários"
                     android:textColor="?android:colorBackground"
                     android:textSize="14dp" />
 

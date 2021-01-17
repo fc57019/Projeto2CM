@@ -11,6 +11,8 @@ class User {
     private var searchUser: String = ""
     private var steps: String = "0"
     private var weight: String = "0.0"
+    private var dailySteps: String = "0.0"
+    private var distance: String = "0.0"
 
     constructor()
     constructor(
@@ -23,7 +25,9 @@ class User {
         profile: String,
         searchUser: String,
         steps: String,
-        weight: String
+        weight: String,
+        dailySteps: String,
+        distance: String
     ) {
         this.uid = uid
         this.name = name
@@ -35,6 +39,24 @@ class User {
         this.searchUser = searchUser
         this.steps = steps
         this.weight = weight
+        this.dailySteps = dailySteps
+        this.distance = distance
+    }
+
+    fun getDailySteps(): String? {
+        return dailySteps
+    }
+
+    fun setDailySteps(dailySteps: String) {
+        this.dailySteps = dailySteps
+    }
+
+    fun getDistance(): String? {
+        return distance
+    }
+
+    fun setDistance(distance: String) {
+        this.distance = distance
     }
 
     fun getUID(): String? {

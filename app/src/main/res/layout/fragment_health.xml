@@ -59,12 +59,11 @@
 
 
             <TextView
-                android:id="@+id/daily_steps_"
+                android:id="@+id/daily_steps_2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
-                android:text="0 Passos"
                 android:textColor="?android:colorBackground"
                 android:textSize="14dp" />
 
@@ -95,11 +94,11 @@
 
 
             <TextView
+                android:id="@+id/distance_view"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
-                android:text="0 Km"
                 android:textColor="?android:colorBackground"
                 android:textSize="14dp" />
 

@@ -8,9 +8,11 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projeto2cm.R
+import com.example.projeto2cm.entities.User
+import com.example.projeto2cm.fragments.distanceView
 import com.example.projeto2cm.fragments.stepsView
+import com.example.projeto2cm.fragments.stepsView2
 import com.example.projeto2cm.utils.NavigationManager
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.GoogleApiClient
@@ -24,9 +26,12 @@ import com.google.android.gms.fitness.request.SensorRequest
 import com.google.android.gms.fitness.result.DataSourcesResult
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
 import java.util.concurrent.TimeUnit
 
 var STEPS: Long? = 0L!!
+var DISTANCE: String? = ""
 
 class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener {
@@ -37,6 +42,9 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
     private val AUTH_PENDING = "auth_state_pending"
     private var authInProgress = false
     private var mApiClient: GoogleApiClient? = null
+    var refUser: DatabaseReference? = null
+    var firebaseUser: FirebaseUser? = null
+    var altura: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +90,24 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
             startActivity(Intent(applicationContext, SplashScreen::class.java))
         }
 
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+        refUser = FirebaseDatabase.getInstance().reference.child("Users")
+            .child(firebaseUser!!.uid)
+
+
+        refUser!!.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val user: User? = snapshot.getValue(User::class.java)
+                    altura = user?.getHeight()
+                    Log.e("altura", altura!!.toString())
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
 
     }
 
@@ -125,6 +151,43 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
                 Log.e("111111", "Field: " + field.name.toString() + " Value: " + value)
                 STEPS = value.toString().toLong()
                 stepsView?.text = STEPS.toString() + " Daily Steps"
+                stepsView2?.text = STEPS.toString() + " Daily Steps"
+
+                val mapDaily = HashMap<String, Any>()
+                mapDaily["dailySteps"] = STEPS.toString()
+                refUser?.updateChildren(mapDaily)
+
+
+                if (altura.equals("0.0") || altura!!.isEmpty() || altura.equals("0")) {
+                    var passos = STEPS.toString().toInt()
+                    var calc: Float = (passos / 3).toFloat()
+                    var convertToKm: Float = (calc / 1000)
+                    //val number: Double = convertToKm.toDouble()
+                    //val number3digits: Double = String.format("%.3f", number).toDouble()
+                    //val number2digits: Double = String.format("%.2f", number3digits).toDouble()
+                    val mapdistance = HashMap<String, Any>()
+                    mapdistance["distance"] = convertToKm.toString()
+                    refUser?.updateChildren(mapdistance)
+                    DISTANCE = convertToKm.toString()
+                    distanceView?.text = DISTANCE.toString()
+                } else {
+                    var passos = STEPS.toString().toInt()
+                    var calc: Float = (passos * (0.45 * altura?.toFloat()!!)).toFloat()
+                    var convertToKm: Float = calc / 1000
+                    //val number: Double = convertToKm.toDouble()
+                    //val number3digits: Double = String.format("%.3f", number).toDouble()
+                    //val number2digits: Double = String.format("%.2f", number3digits).toDouble()
+                    val mapdistance = HashMap<String, Any>()
+                    mapdistance["distance"] = convertToKm.toString()
+                    refUser?.updateChildren(mapdistance)
+                    DISTANCE = convertToKm.toString()
+                    distanceView?.text = DISTANCE.toString()
+                    Log.e("sdfsdfdsfsfsdfsfsdfsdfsdfds", DISTANCE.toString())
+                }
+
+                //distancia = steps*(0.45 * hiehyt)
+
+
             }
         }
     }
@@ -144,11 +207,11 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
                 }
             }
 
-      /*  Fitness.SensorsApi.findDataSources(mApiClient, dataSourceRequest)
-            .setResultCallback(dataSourcesResultCallback)*/
+        Fitness.SensorsApi.findDataSources(mApiClient, dataSourceRequest)
+            .setResultCallback(dataSourcesResultCallback)
 
 
-        val dataSourceRequest1 = DataSourcesRequest.Builder()
+        /*val dataSourceRequest1 = DataSourcesRequest.Builder()
             .setDataTypes(DataType.TYPE_DISTANCE_DELTA)
             .setDataSourceTypes(DataSource.TYPE_RAW)
             .build()
@@ -162,7 +225,7 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
                 }
             }
 
-       /* Fitness.SensorsApi.findDataSources(mApiClient, dataSourceRequest1)
+       Fitness.SensorsApi.findDataSources(mApiClient, dataSourceRequest1)
             .setResultCallback(dataSourcesResultCallback1)*/
     }
 

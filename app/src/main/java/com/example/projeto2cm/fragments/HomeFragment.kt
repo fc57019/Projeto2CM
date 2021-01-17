@@ -12,6 +12,8 @@ import com.example.projeto2cm.R
 import com.example.projeto2cm.activities.STEPS
 
 var stepsView: TextView? = null
+var stepsView2: TextView? = null
+var distanceView: TextView? = null
 
 class HomeFragment : Fragment() {
 
@@ -25,7 +27,7 @@ class HomeFragment : Fragment() {
             openInfo()
         }
         stepsView = view.findViewById(R.id.daily_steps)
-        stepsView?.text = STEPS.toString() + "Daily Steps"
+        stepsView?.text = STEPS.toString() + " Daily Steps"
 
         return view
     }

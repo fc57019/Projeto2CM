@@ -43,7 +43,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun registUser() {
         val nameLabel: String = findViewById<EditText>(R.id.name_regist_label).text.toString()
-        val emailLabel: String = findViewById<EditText>(R.id.email_regist_label).text.toString().replace(" ","")
+        val emailLabel: String =
+            findViewById<EditText>(R.id.email_regist_label).text.toString().replace(" ", "")
         val passwordLabel: String =
             findViewById<EditText>(R.id.password_regist_label).text.toString()
         val password2Label: String =
@@ -72,6 +73,8 @@ class RegisterActivity : AppCompatActivity() {
                         userHashMap["height"] = "0.0"
                         userHashMap["dia"] = Calendar.DAY_OF_MONTH
                         userHashMap["searchUser"] = emailLabel.toLowerCase()
+                        userHashMap["dailySteps"] = "0"
+                        userHashMap["distance"] = "0"
 
                         refUsers.updateChildren(userHashMap).addOnCompleteListener { task ->
                             if (task.isSuccessful) {

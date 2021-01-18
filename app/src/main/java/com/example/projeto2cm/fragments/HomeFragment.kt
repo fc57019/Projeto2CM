@@ -21,6 +21,8 @@ import java.util.*
 
 var stepsView: TextView? = null
 var teste: Int = 1
+var stepsView2: TextView? = null
+var distanceView: TextView? = null
 
 class HomeFragment : Fragment() {
 
@@ -69,7 +71,7 @@ class HomeFragment : Fragment() {
             stepsView?.text = STEPS.toString() + "Daily Steps"
         }
 
-
+        stepsView?.text = STEPS.toString() + " Daily Steps"
         return view
     }
 

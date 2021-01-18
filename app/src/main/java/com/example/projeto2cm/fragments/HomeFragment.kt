@@ -10,8 +10,17 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.example.projeto2cm.R
 import com.example.projeto2cm.activities.STEPS
+import com.example.projeto2cm.entities.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
+import java.sql.SQLOutput
+import java.util.*
+
 
 var stepsView: TextView? = null
+var teste: Int = 1
 var stepsView2: TextView? = null
 var distanceView: TextView? = null
 var ALTURA: String? = ""
@@ -27,9 +36,43 @@ class HomeFragment : Fragment() {
         info?.setOnClickListener {
             openInfo()
         }
-        stepsView = view.findViewById(R.id.daily_steps)
-        stepsView?.text = STEPS.toString() + " Daily Steps"
 
+        stepsView = view.findViewById(R.id.daily_steps)
+        var refUser: DatabaseReference? = null
+        var firebaseUser: FirebaseUser? = null
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+        refUser = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+        refUser!!.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val user: User? = snapshot.getValue(User::class.java)
+                    val cal: Calendar = Calendar.getInstance()
+                    val currentDay: Int = cal.get(Calendar.DAY_OF_MONTH)
+                    print("diua base de dados "+user?.getDia())
+                    println("dia hj "+currentDay)
+                    if (user?.getDia() != currentDay) {
+                        println("dia diferente 00000000000")
+                        val mapDia = HashMap<String, Any>()
+                        mapDia["dia"] = currentDay
+                        refUser?.updateChildren(mapDia)
+                        teste=0
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+        if(teste==0){
+            println("RESETTTTTTTTTTTTT")
+            stepsView?.text = "0 Daily Steps"
+        }else{
+            println("NOT RESETTTTTTTTTTTTTTTTT")
+            stepsView?.text = STEPS.toString() + "Daily Steps"
+        }
+
+        stepsView?.text = STEPS.toString() + " Daily Steps"
         return view
     }
 
@@ -54,7 +97,6 @@ class HomeFragment : Fragment() {
             sistemaDePontosPorPassos?.visibility = View.VISIBLE
             sistemaDePontosPorPassosCardview?.visibility = View.VISIBLE
         }
-
     }
-
 }
+

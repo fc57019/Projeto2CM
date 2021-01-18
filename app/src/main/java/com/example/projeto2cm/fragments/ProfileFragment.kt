@@ -1,7 +1,9 @@
 package com.example.projeto2cm.fragments
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -24,6 +26,8 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class ProfileFragment : Fragment() {
@@ -79,6 +83,31 @@ class ProfileFragment : Fragment() {
                     val weight: EditText? = view.findViewById(R.id.profile_weight) as EditText?
                     val height: EditText? = view.findViewById(R.id.profile_height) as EditText?
                     val pic: ImageView? = view.findViewById(R.id.profile_pic) as ImageView?
+
+                    /*val mPickTimeBtn = view.findViewById<Button>(R.id.button5)
+                    val c = Calendar.getInstance()
+                    val year = c.get(Calendar.YEAR)
+                    val month = c.get(Calendar.MONTH)
+                    val day = c.get(Calendar.DAY_OF_MONTH)
+                    mPickTimeBtn.setOnClickListener {
+                        val dpd = activity?.let { it1 ->
+                            DatePickerDialog(
+                                it1.applicationContext,
+                                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                                    // Display Selected date in TextView
+                                    if (date != null) {
+                                        date.setText("" + dayOfMonth + " " + month + ", " + year)
+                                    }
+                                },
+                                year,
+                                month,
+                                day
+                            )
+                        }
+                        if (dpd != null) {
+                            dpd.show()
+                        }
+                    }*/
 
                     val name1 = user?.getName()
                     val date1 = user?.getDate()

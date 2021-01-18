@@ -9,6 +9,8 @@ import com.example.projeto2cm.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import java.util.*
+import kotlin.collections.HashMap
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -69,6 +71,7 @@ class RegisterActivity : AppCompatActivity() {
                         userHashMap["date"] = "09/12/2020"
                         userHashMap["weight"] = "0.0"
                         userHashMap["height"] = "0.0"
+                        userHashMap["dia"] = Calendar.DAY_OF_MONTH
                         userHashMap["searchUser"] = emailLabel.toLowerCase()
                         userHashMap["dailySteps"] = "0"
                         userHashMap["distance"] = "0"

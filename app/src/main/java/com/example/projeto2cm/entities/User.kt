@@ -1,5 +1,7 @@
 package com.example.projeto2cm.entities
 
+import java.util.*
+
 class User {
     private var uid: String = ""
     private var name: String = ""
@@ -11,6 +13,7 @@ class User {
     private var searchUser: String = ""
     private var steps: String = "0"
     private var weight: String = "0.0"
+    private var dia: Int = Calendar.DAY_OF_MONTH
     private var dailySteps: String = "0.0"
     private var distance: String = "0.0"
 
@@ -26,6 +29,7 @@ class User {
         searchUser: String,
         steps: String,
         weight: String,
+        dia: Int
         dailySteps: String,
         distance: String
     ) {
@@ -39,6 +43,7 @@ class User {
         this.searchUser = searchUser
         this.steps = steps
         this.weight = weight
+        this.dia = dia
         this.dailySteps = dailySteps
         this.distance = distance
     }
@@ -137,6 +142,14 @@ class User {
 
     fun setSteps(steps: String) {
         this.steps = steps
+    }
+
+    fun getDia(): Int? {
+        return dia
+    }
+
+    fun setDia(dia: Int) {
+        this.dia = dia
     }
 
 

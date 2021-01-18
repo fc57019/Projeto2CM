@@ -19,6 +19,7 @@
         android:label="Family Together"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:configChanges="locale|orientation"
         android:theme="@style/Theme.Projeto2CM">
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -32,23 +33,28 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".activities.ViewFullImageActivity" />
-        <activity android:name=".activities.ChatActivity" />
-        <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.Login" />
-        <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.SplashScreen">
+        <activity android:name=".activities.ViewFullImageActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.ChatActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.Login"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.SplashScreen"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <meta-data
             android:name="com.google.android.geo.API_Key"
             android:value="AIzaSyD6dlbyXulrtcrIUSrT5o2vchkYbsXDkLE" />
-
         <service
             android:name=".notifications.MyFireBaseMessaging"
             android:enabled="true"

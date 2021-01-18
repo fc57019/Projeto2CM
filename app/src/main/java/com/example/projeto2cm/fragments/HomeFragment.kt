@@ -14,6 +14,7 @@ import com.example.projeto2cm.activities.STEPS
 var stepsView: TextView? = null
 var stepsView2: TextView? = null
 var distanceView: TextView? = null
+var ALTURA: String? = ""
 
 class HomeFragment : Fragment() {
 

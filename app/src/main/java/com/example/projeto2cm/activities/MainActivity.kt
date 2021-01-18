@@ -28,15 +28,27 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.time.LocalDate
+import java.time.LocalTime
+import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.HashMap
 
 var STEPS: Long? = 0L!!
 var DISTANCE: String? = ""
+var ALTURA: String? = ""
 
 class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener {
 
 
+    private var midnight: LocalTime = LocalTime.MIDNIGHT
+
+    //private var today: LocalTime = LocalDate.now(Clock.systemDefaultZone())
+    //private var todayMidnight: LocalDateTime = LocalDateTime.of(today, midnight)
+    private var horaAtual: LocalTime? = null
     private val REQUEST_OAUTH = 1
     private var count: Int = 0
     private val AUTH_PENDING = "auth_state_pending"
@@ -44,11 +56,56 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
     private var mApiClient: GoogleApiClient? = null
     var refUser: DatabaseReference? = null
     var firebaseUser: FirebaseUser? = null
-    var altura: String? = ""
+    var x = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+        refUser = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+
+        var height1 = ""
+        refUser!!.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+
+                    val user: User? = snapshot.getValue(User::class.java)
+                    height1 = user?.getHeight().toString()
+
+                    var passos = STEPS.toString().toDouble()
+                    var calc: Double = (passos * (0.43 * height1.toDouble()!!))
+                    var convertToKm: Double = calc / 1000
+                    var convert =
+                        BigDecimal(convertToKm).setScale(3, RoundingMode.HALF_UP)
+
+                    if (convert.toFloat() < 1.0) {
+                        var mapdistance = HashMap<String, Any>()
+                        mapdistance["distance"] = convert.toString()
+                        refUser?.updateChildren(mapdistance)
+                        DISTANCE = convert.toString()
+                        distanceView?.text = DISTANCE.toString() + " Km"
+                    } else {
+                        var convert2 = BigDecimal(convertToKm).setScale(1, RoundingMode.HALF_UP)
+                        var mapdistance = HashMap<String, Any>()
+                        mapdistance["distance"] = convert.toString()
+                        refUser?.updateChildren(mapdistance)
+                        DISTANCE = convert2.toString()
+                        distanceView?.text = DISTANCE.toString() + " Km"
+                    }
+
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+
 
         if (!screenRotated(savedInstanceState)) {
             NavigationManager.goToHomeFragment(supportFragmentManager)
@@ -64,6 +121,7 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
 
         val bottomNavigationView =
             findViewById<BottomNavigationView>(R.id.bottom_navigation)?.setOnNavigationItemSelectedListener {
+                checkMidnight()
                 when (it.itemId) {
                     R.id.ic_health -> {
                         NavigationManager.goToHealthFragment(supportFragmentManager)
@@ -90,25 +148,22 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
             startActivity(Intent(applicationContext, SplashScreen::class.java))
         }
 
-        firebaseUser = FirebaseAuth.getInstance().currentUser
-        refUser = FirebaseDatabase.getInstance().reference.child("Users")
-            .child(firebaseUser!!.uid)
+
+    }
 
 
-        refUser!!.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    val user: User? = snapshot.getValue(User::class.java)
-                    altura = user?.getHeight()
-                    Log.e("altura", altura!!.toString())
-                }
-            }
+    fun checkMidnight() {
+        var horaAtual: String = LocalTime.now().toString() // hora atual
+        var dateAtual: String = LocalDate.now().toString() // data autal
+        var temp = dateAtual.split("-")
+        var nextDate = temp[0] + "-" + temp[1] + "-" + (temp[2].toInt() + 1) // criar nova data
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-
+        if (horaAtual >= "00:00:00.000" && dateAtual != nextDate) {
+            x = 500
+            dateAtual = nextDate
+        }
+        Log.e("wwww1", (x).toString())
+        Log.e("wwww2", (horaAtual).toString())
     }
 
     override fun onStart() {
@@ -139,10 +194,13 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
         return savedInstanceState != null
     }
 
+
     override fun onDataPoint(p0: DataPoint) {
         for (field in p0.dataType.fields) {
             val value: Value = p0.getValue(field)
             runOnUiThread {
+
+
                 Toast.makeText(
                     applicationContext,
                     "Field: " + field.name.toString() + " Value: " + value,
@@ -156,37 +214,6 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
                 val mapDaily = HashMap<String, Any>()
                 mapDaily["dailySteps"] = STEPS.toString()
                 refUser?.updateChildren(mapDaily)
-
-
-                if (altura.equals("0.0") || altura!!.isEmpty() || altura.equals("0")) {
-                    var passos = STEPS.toString().toInt()
-                    var calc: Float = (passos / 3).toFloat()
-                    var convertToKm: Float = (calc / 1000)
-                    //val number: Double = convertToKm.toDouble()
-                    //val number3digits: Double = String.format("%.3f", number).toDouble()
-                    //val number2digits: Double = String.format("%.2f", number3digits).toDouble()
-                    val mapdistance = HashMap<String, Any>()
-                    mapdistance["distance"] = convertToKm.toString()
-                    refUser?.updateChildren(mapdistance)
-                    DISTANCE = convertToKm.toString()
-                    distanceView?.text = DISTANCE.toString()
-                } else {
-                    var passos = STEPS.toString().toInt()
-                    var calc: Float = (passos * (0.45 * altura?.toFloat()!!)).toFloat()
-                    var convertToKm: Float = calc / 1000
-                    //val number: Double = convertToKm.toDouble()
-                    //val number3digits: Double = String.format("%.3f", number).toDouble()
-                    //val number2digits: Double = String.format("%.2f", number3digits).toDouble()
-                    val mapdistance = HashMap<String, Any>()
-                    mapdistance["distance"] = convertToKm.toString()
-                    refUser?.updateChildren(mapdistance)
-                    DISTANCE = convertToKm.toString()
-                    distanceView?.text = DISTANCE.toString()
-                    Log.e("sdfsdfdsfsfsdfsfsdfsdfsdfds", DISTANCE.toString())
-                }
-
-                //distancia = steps*(0.45 * hiehyt)
-
 
             }
         }
@@ -277,3 +304,4 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
     }
 
 }
+

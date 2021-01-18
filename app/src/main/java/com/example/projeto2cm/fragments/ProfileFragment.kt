@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.projeto2cm.R
+import com.example.projeto2cm.activities.ALTURA
 import com.example.projeto2cm.entities.User
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
@@ -92,11 +93,11 @@ class ProfileFragment : Fragment() {
                     date?.setText(date1)
                     weight?.setText(weight1.toString())
                     height?.setText(height1.toString())
-                    if(!genre1.equals("genero")){
-                        editTextFilledExposedDropdownGenre.setText(genre1,false)
+                    if (!genre1.equals("genero")) {
+                        editTextFilledExposedDropdownGenre.setText(genre1, false)
                     }
-                    if(!steps1.equals("0")){
-                        editTextFilledExposedDropdownSteps.setText(steps1,false)
+                    if (!steps1.equals("0")) {
+                        editTextFilledExposedDropdownSteps.setText(steps1, false)
                     }
                     Log.e("USER", "$name1")
                 }
@@ -135,6 +136,7 @@ class ProfileFragment : Fragment() {
             val mapHeight = HashMap<String, Any>()
             mapHeight["height"] = height?.text.toString()
             refUser?.updateChildren(mapHeight)
+            ALTURA = height?.text.toString()
 
             val mapSteps = HashMap<String, Any>()
             mapSteps["steps"] = editTextFilledExposedDropdownSteps.text.toString()

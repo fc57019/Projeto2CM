@@ -69,6 +69,8 @@ class ChatActivity : AppCompatActivity() {
 
                 val usernameChat = findViewById<TextView>(R.id.username_chat)
                 usernameChat?.text = user!!.getName()
+                var m = user!!.getHeight()
+                Log.e("ChatActivity", m.toString())
                 val profilePic = findViewById<ImageView>(R.id.profile_pic)
                 Picasso.get().load(user.getProfile()).into(profilePic)
 

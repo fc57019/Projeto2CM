@@ -16,6 +16,7 @@ class User {
     private var dia: Int = Calendar.DAY_OF_MONTH
     private var dailySteps: String = "0.0"
     private var distance: String = "0.0"
+    private var allSteps: String = "0"
 
     constructor()
     constructor(
@@ -29,9 +30,10 @@ class User {
         searchUser: String,
         steps: String,
         weight: String,
-        dia: Int
+        dia: Int,
         dailySteps: String,
-        distance: String
+        distance: String,
+        allSteps: String
     ) {
         this.uid = uid
         this.name = name
@@ -46,6 +48,15 @@ class User {
         this.dia = dia
         this.dailySteps = dailySteps
         this.distance = distance
+        this.allSteps = allSteps
+    }
+
+    fun getAllSteps(): String? {
+        return allSteps
+    }
+
+    fun setAllSteps(allSteps: String) {
+        this.allSteps = allSteps
     }
 
     fun getDailySteps(): String? {

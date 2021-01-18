@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projeto2cm.R
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -41,6 +42,7 @@ class RegisterActivity : AppCompatActivity() {
         TODO("Not yet implemented")
     }
 
+
     private fun registUser() {
         val nameLabel: String = findViewById<EditText>(R.id.name_regist_label).text.toString()
         val emailLabel: String =
@@ -75,6 +77,7 @@ class RegisterActivity : AppCompatActivity() {
                         userHashMap["searchUser"] = emailLabel.toLowerCase()
                         userHashMap["dailySteps"] = "0"
                         userHashMap["distance"] = "0"
+                        userHashMap["allSteps"] = "0"
 
                         refUsers.updateChildren(userHashMap).addOnCompleteListener { task ->
                             if (task.isSuccessful) {

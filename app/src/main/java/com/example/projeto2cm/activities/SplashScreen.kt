@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projeto2cm.R
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -23,6 +24,8 @@ class SplashScreen : AppCompatActivity() {
             finish()
         }
     }
+
+
 
     override fun onResume() {
         super.onResume()

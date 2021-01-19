@@ -1,4 +1,4 @@
-package com.example.projeto2cm.fragments
+package com.example.projeto2cm.dialogs
 
 import android.os.Bundle
 import android.text.Editable
@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projeto2cm.R
 import com.example.projeto2cm.adapters.UserAddAdapter
 import com.example.projeto2cm.entities.User
+import com.example.projeto2cm.fragments.mUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -65,7 +66,7 @@ class MyCustomDialog : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        val width = (resources.displayMetrics.widthPixels * 0.85).toInt()
+        val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
         val height = (resources.displayMetrics.heightPixels * 0.40).toInt()
         dialog!!.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }

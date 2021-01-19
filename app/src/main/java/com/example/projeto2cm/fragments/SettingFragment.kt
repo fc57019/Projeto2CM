@@ -1,16 +1,13 @@
 package com.example.projeto2cm.fragments
 
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.DialogFragment
 import com.example.projeto2cm.R
-import java.util.*
+import com.example.projeto2cm.dialogs.MyCustomDialog
 
 val lang: String = "pt"
 class SettingFragment : DialogFragment() {

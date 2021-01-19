@@ -4,9 +4,12 @@ import android.content.Intent
 import android.content.IntentSender.SendIntentException
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.projeto2cm.R
+import com.example.projeto2cm.dialogs.AchievementDialog
 import com.example.projeto2cm.entities.User
 import com.example.projeto2cm.fragments.distanceView
 import com.example.projeto2cm.fragments.stepsView
@@ -27,6 +30,7 @@ import com.google.android.gms.fitness.request.OnDataPointListener
 import com.google.android.gms.fitness.request.SensorRequest
 import com.google.android.gms.fitness.result.DataSourcesResult
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -37,6 +41,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
 import java.util.concurrent.TimeUnit
+import com.example.projeto2cm.R
 
 
 var STEPS: Long? = 0L!!
@@ -110,7 +115,16 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
             startActivity(Intent(applicationContext, SplashScreen::class.java))
         }
 
+        val fab = findViewById<FloatingActionButton>(R.id.fab)
+        fab.setOnClickListener {
+            createAchievement()
+        }
 
+    }
+
+
+    private fun createAchievement() {
+        AchievementDialog().show(supportFragmentManager, "AchievementDialog")
     }
 
     fun googleSignin() {

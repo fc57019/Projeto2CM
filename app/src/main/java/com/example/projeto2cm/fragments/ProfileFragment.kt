@@ -1,23 +1,25 @@
 package com.example.projeto2cm.fragments
 
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.projeto2cm.R
 import com.example.projeto2cm.activities.ALTURA
 import com.example.projeto2cm.entities.User
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -84,31 +86,6 @@ class ProfileFragment : Fragment() {
                     val height: EditText? = view.findViewById(R.id.profile_height) as EditText?
                     val pic: ImageView? = view.findViewById(R.id.profile_pic) as ImageView?
 
-                    /*val mPickTimeBtn = view.findViewById<Button>(R.id.button5)
-                    val c = Calendar.getInstance()
-                    val year = c.get(Calendar.YEAR)
-                    val month = c.get(Calendar.MONTH)
-                    val day = c.get(Calendar.DAY_OF_MONTH)
-                    mPickTimeBtn.setOnClickListener {
-                        val dpd = activity?.let { it1 ->
-                            DatePickerDialog(
-                                it1.applicationContext,
-                                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                                    // Display Selected date in TextView
-                                    if (date != null) {
-                                        date.setText("" + dayOfMonth + " " + month + ", " + year)
-                                    }
-                                },
-                                year,
-                                month,
-                                day
-                            )
-                        }
-                        if (dpd != null) {
-                            dpd.show()
-                        }
-                    }*/
-
                     val name1 = user?.getName()
                     val date1 = user?.getDate()
                     val weight1 = user?.getWeight()
@@ -141,6 +118,7 @@ class ProfileFragment : Fragment() {
 
         val save: Button = view.findViewById(R.id.save_btn)
         save.setOnClickListener {
+
             val name = view.findViewById(R.id.profile_name) as EditText?
             val date: EditText? = view.findViewById(R.id.profile_date) as EditText?
             val weight: EditText? = view.findViewById(R.id.profile_weight) as EditText?
@@ -176,6 +154,16 @@ class ProfileFragment : Fragment() {
             println(mapGenre)
             println(editTextFilledExposedDropdownGenre.text.toString())
             refUser?.updateChildren(mapGenre)
+
+            val snackbar = Snackbar.make(view, "Parâmetros Guardados", Snackbar.LENGTH_LONG)
+            val view: View = snackbar.getView()
+            val tv = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            } else {
+                tv.setGravity(Gravity.CENTER_HORIZONTAL);
+            }
+            snackbar.show()
         }
 
         val editProfilePic: ImageView = view.findViewById(R.id.edit_profile_pic)

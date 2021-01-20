@@ -6,11 +6,12 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projeto2cm.R
-import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.example.projeto2cm.entities.Achievement
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class RegisterActivity : AppCompatActivity() {
@@ -60,6 +61,10 @@ class RegisterActivity : AppCompatActivity() {
             firebaseAuth.createUserWithEmailAndPassword(emailLabel, passwordLabel)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        var emptyArray = ArrayList<Achievement>()
+
+                        /*var achievement = Achievement("1", "as", "as1", "12", "run")
+                        emptyArray.add(achievement)*/
                         firebaseUserId = firebaseAuth.currentUser?.uid.toString()
                         refUsers = FirebaseDatabase.getInstance().reference.child("Users")
                             .child(firebaseUserId)
@@ -78,6 +83,7 @@ class RegisterActivity : AppCompatActivity() {
                         userHashMap["dailySteps"] = "0"
                         userHashMap["distance"] = "0"
                         userHashMap["allSteps"] = "0"
+                        userHashMap["achievementList"] = ArrayList<Achievement>()
 
                         refUsers.updateChildren(userHashMap).addOnCompleteListener { task ->
                             if (task.isSuccessful) {

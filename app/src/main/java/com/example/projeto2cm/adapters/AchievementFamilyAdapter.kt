@@ -7,14 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projeto2cm.R
-import com.example.projeto2cm.activities.ChatActivity
 import com.example.projeto2cm.entities.User
 import com.squareup.picasso.Picasso
 
-class UserAddAdapter(context: Context, user: List<User>, isChatCheck: Boolean) :
-    RecyclerView.Adapter<UserAddAdapter.ViewHolder?>() {
+
+class AchievementFamilyAdapter(context: Context, user: List<User>, isChatCheck: Boolean) :
+    RecyclerView.Adapter<AchievementFamilyAdapter.ViewHolder?>() {
 
     private val context: Context
     private val user: List<User>
@@ -32,7 +33,7 @@ class UserAddAdapter(context: Context, user: List<User>, isChatCheck: Boolean) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.user_item_add, parent, false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.user_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -43,10 +44,14 @@ class UserAddAdapter(context: Context, user: List<User>, isChatCheck: Boolean) :
             .into(holder.profileimg)
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, ChatActivity::class.java)
-            intent.putExtra("visit_id", user2.getUID())
-            context.startActivity(intent)
+            val name = user2.getName()
+            val participantID = user2.getUID()
+            val intent = Intent("participanteID")
+            intent.putExtra("name", name)
+            intent.putExtra("participanteID", participantID)
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
         }
+
     }
 
     override fun getItemCount(): Int {

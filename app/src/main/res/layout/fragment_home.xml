@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
-                    android:text="30 Minutos | 5 Pontos"
+                    android:text="30 Minutos | 6 Pontos"
                     android:textColor="?android:colorBackground"
                     android:textSize="14dp" />
 
@@ -190,7 +190,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="10dp"
-        android:text="Os Meus Achivements"
+        android:text="Os Meus Achievements"
         android:textSize="16dp"
         android:textStyle="bold" />
 
@@ -310,8 +310,21 @@
             </RelativeLayout>
         </LinearLayout>
 
-
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="10dp"
+        android:text="Achievements"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/achievements"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

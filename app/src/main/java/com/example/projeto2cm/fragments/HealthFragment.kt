@@ -1,7 +1,7 @@
 package com.example.projeto2cm.fragments
 
-import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +9,19 @@ import androidx.fragment.app.Fragment
 import com.example.projeto2cm.R
 import com.example.projeto2cm.activities.DISTANCE
 import com.example.projeto2cm.activities.STEPS
+import com.example.projeto2cm.entities.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.*
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 
+var progressMaxTemp: Float? = null
 
 class HealthFragment : Fragment() {
 
     var refUser: DatabaseReference? = null
     var firebaseUser: FirebaseUser? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,38 +35,48 @@ class HealthFragment : Fragment() {
         distanceView = view.findViewById(R.id.distance_view)
         distanceView?.text = DISTANCE.toString() + " Km"
 
-        val circularProgressBar = view.findViewById<CircularProgressBar>(R.id.yourCircularProgressbar)
-        circularProgressBar.apply {
-            // or with animation
-            STEPS?.let { setProgressWithAnimation(it.toFloat(), 1000) } // =1s
+        passosDados = view.findViewById(R.id.textView)
 
-            // Set Progress Max
-            progressMax = 200f
+        // Set Progress Max
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+        refUser = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+        refUser!!.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val circularProgressBar =
+                    view.findViewById<CircularProgressBar>(R.id.circularProgressBar)
+                circularProgressBar.apply {
+                    if (snapshot.exists()) {
+                        val user: User? = snapshot.getValue(User::class.java)
+                        val passos = user?.getSteps()
+                        if (passos.equals("0") || passos.equals("6 000")) {
+                            progressMax = 6000f
+                            Log.e("Primeiro", "Primeiro")
+                        }
+                        if (passos.equals("10 000")) {
+                            progressMax = 10000f
+                            Log.e("Segundo", "Segundo")
+                        }
+                        if (passos.equals("12 000")) {
+                            progressMax = 12000f
+                            Log.e("Terceiro", "Terceiro")
+                        }
 
-            // Set ProgressBar Color
-            progressBarColor = Color.BLACK
-            // or with gradient
-            progressBarColorStart = Color.GRAY
-            progressBarColorEnd = Color.RED
-            progressBarColorDirection = CircularProgressBar.GradientDirection.TOP_TO_BOTTOM
+                        progressMaxTemp = progressMax
+                        passosDados?.text =
+                            STEPS.toString() + " / " + progressMaxTemp!!.toInt().toString()
+                    }
+                    println(STEPS)
+                    STEPS?.toFloat()?.let { setProgressWithAnimation(it, 1000) }
 
-            // Set background ProgressBar Color
-            backgroundProgressBarColor = Color.GRAY
-            // or with gradient
-            backgroundProgressBarColorStart = Color.WHITE
-            backgroundProgressBarColorEnd = Color.RED
-            backgroundProgressBarColorDirection = CircularProgressBar.GradientDirection.TOP_TO_BOTTOM
+                }
 
-            // Set Width
-            progressBarWidth = 7f // in DP
-            backgroundProgressBarWidth = 3f // in DP
+            }
 
-            // Other
-            roundBorder = true
-            startAngle = 180f
-            progressDirection = CircularProgressBar.ProgressDirection.TO_RIGHT
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
 
-        }
+        })
 
         return view
     }

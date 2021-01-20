@@ -63,7 +63,7 @@
         android:textSize="18sp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_list1"
+        android:id="@+id/achievement_family"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

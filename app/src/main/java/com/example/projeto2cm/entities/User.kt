@@ -1,6 +1,7 @@
 package com.example.projeto2cm.entities
 
 import java.util.*
+import kotlin.collections.ArrayList
 
 class User {
     private var uid: String = ""
@@ -17,6 +18,7 @@ class User {
     private var dailySteps: String = "0.0"
     private var distance: String = "0.0"
     private var allSteps: String = "0"
+    private var achievementList: ArrayList<Achievement> = ArrayList()
 
     constructor()
     constructor(
@@ -33,7 +35,8 @@ class User {
         dia: Int,
         dailySteps: String,
         distance: String,
-        allSteps: String
+        allSteps: String,
+        achievementList: ArrayList<Achievement>
     ) {
         this.uid = uid
         this.name = name
@@ -49,6 +52,15 @@ class User {
         this.dailySteps = dailySteps
         this.distance = distance
         this.allSteps = allSteps
+        this.achievementList = achievementList
+    }
+
+    fun getAchievementList(): ArrayList<Achievement>? {
+        return achievementList
+    }
+
+    fun setAchievementList(achievementList: ArrayList<Achievement>) {
+        this.achievementList = achievementList
     }
 
     fun getAllSteps(): String? {

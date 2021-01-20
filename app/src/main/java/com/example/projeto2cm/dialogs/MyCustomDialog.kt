@@ -24,9 +24,9 @@ import com.google.firebase.database.ValueEventListener
 
 class MyCustomDialog : DialogFragment() {
 
-    var recyclerView: RecyclerView? = null
+    lateinit var recyclerView: RecyclerView
     private var searchUserField: EditText? = null
-    private var userAddAdapter: UserAddAdapter? = null
+    lateinit var userAddAdapter: UserAddAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,7 +79,7 @@ class MyCustomDialog : DialogFragment() {
                 .orderByChild("searchUser")
                 .startAt(str)
                 .endAt(str + "\uf8ff")
-        queryUser.addValueEventListener(object : ValueEventListener {
+        queryUser.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 (mUser as ArrayList<User>).clear()
                 if (searchUserField!!.text.toString() != "" && str.contains(".com")) {  // meter regex se metermos outros logins
@@ -91,11 +91,11 @@ class MyCustomDialog : DialogFragment() {
                         }
                     }
                     userAddAdapter = UserAddAdapter(context!!, mUser!!, false)
-                    recyclerView!!.adapter = userAddAdapter
+                    recyclerView.adapter = userAddAdapter
                 } else {
                     (mUser as ArrayList<User>).clear()
                     userAddAdapter = UserAddAdapter(context!!, mUser!!, false)
-                    recyclerView!!.adapter = userAddAdapter
+                    recyclerView.adapter = userAddAdapter
                 }
             }
 

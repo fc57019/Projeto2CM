@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.projeto2cm.R
 import com.example.projeto2cm.activities.ALTURA
@@ -155,10 +154,10 @@ class ProfileFragment : Fragment() {
             println(editTextFilledExposedDropdownGenre.text.toString())
             refUser?.updateChildren(mapGenre)
 
-            val snackbar = Snackbar.make(view, "Parâmetros Guardados", Snackbar.LENGTH_LONG)
+            val snackbar = Snackbar.make(view, "Parâmetros Guardados", Snackbar.LENGTH_SHORT)
             val view: View = snackbar.getView()
             val tv = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             } else {
                 tv.setGravity(Gravity.CENTER_HORIZONTAL);

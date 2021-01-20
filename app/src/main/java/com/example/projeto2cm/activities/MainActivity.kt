@@ -4,16 +4,12 @@ import android.content.Intent
 import android.content.IntentSender.SendIntentException
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.projeto2cm.R
 import com.example.projeto2cm.dialogs.AchievementDialog
 import com.example.projeto2cm.entities.User
-import com.example.projeto2cm.fragments.distanceView
-import com.example.projeto2cm.fragments.stepsView
-import com.example.projeto2cm.fragments.stepsView2
+import com.example.projeto2cm.fragments.*
 import com.example.projeto2cm.utils.NavigationManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.ConnectionResult
@@ -41,8 +37,12 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
 import java.util.concurrent.TimeUnit
-import com.example.projeto2cm.R
 
+
+/*
+Quando carrega num elemento da familia vamos bustsr essa pessoa a firebase e adicionamos na classe achievements esse achievement.
+Depois na pagina principal metemos o array achievements na recyclerview. (Random idea)
+ */
 
 var STEPS: Long? = 0L!!
 var DISTANCE: String? = ""
@@ -214,6 +214,8 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
                         stepsView?.text = STEPS.toString() + " Daily Steps"
                         stepsView2?.text = STEPS.toString() + " Daily Steps"
 
+                        passosDados?.text =
+                            STEPS.toString() + " / " + progressMaxTemp!!.toInt().toString()
                         getDailyDistance()
                     }
             }

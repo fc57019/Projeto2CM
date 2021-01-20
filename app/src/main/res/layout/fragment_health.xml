@@ -109,20 +109,30 @@
 
     <LinearLayout
         android:id="@+id/yourCircularProgressbar"
-        android:layout_width="match_parent"
+        android:layout_width="339dp"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <com.mikhaellopez.circularprogressbar.CircularProgressBar
             android:id="@+id/circularProgressBar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cpb_background_progressbar_color="#b6bbd8"
-            app:cpb_background_progressbar_width="5dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:translationX="75dp"
+            android:translationY="25dp"
+            app:cpb_background_progressbar_color="#F2F2F2"
+            app:cpb_background_progressbar_width="20dp"
             app:cpb_progress_direction="to_right"
-            app:cpb_progressbar_color="#3f51b5"
-            app:cpb_progressbar_width="10dp"
-            app:cpb_round_border="false" />
+            app:cpb_progressbar_color="#F44336"
+            app:cpb_progressbar_width="15dp"
+            app:cpb_round_border="true" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:translationX="-65dp"
+            android:translationY="115dp" />
 
 
     </LinearLayout>

@@ -1,5 +1,4 @@
 <resources>
-    <!-- Base application theme. -->
     <style name="Theme.Projeto2CM" parent="Base.Theme.Projeto2CM">
         <item name="colorPrimary">@color/blue_200</item>
         <item name="colorPrimaryVariant">@color/blue_300</item>

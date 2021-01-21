@@ -33,14 +33,15 @@ class RegisterActivity : AppCompatActivity() {
             state.visibility = View.VISIBLE
         }
 
-        val registoGoogle: ImageView = findViewById(R.id.regist_google)
-        registoGoogle.setOnClickListener {
-            registoGoogleUser()
-        }
     }
 
     private fun registoGoogleUser() {
         TODO("Not yet implemented")
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        moveTaskToBack(true)
     }
 
 

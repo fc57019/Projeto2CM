@@ -12,6 +12,9 @@ class Achievement {
     private var pointsFamiliar: String = ""
     private var criadorID: String = ""
     private var familiarID: String = ""
+    private var cPVez: String = ""
+    private var fPVez: String = ""
+    private var t: String = ""
 
 
     constructor()
@@ -26,7 +29,10 @@ class Achievement {
         pointsCriador: String,
         pointsFamiliar: String,
         criadorID: String,
-        familiarID: String
+        familiarID: String,
+        cPVez: String,
+        fPVez: String,
+        t: String
     ) {
         this.timer = timer
         this.participante = participante
@@ -39,7 +45,34 @@ class Achievement {
         this.pointsFamiliar = pointsFamiliar
         this.criadorID = criadorID
         this.familiarID = familiarID
+        this.cPVez = cPVez
+        this.fPVez = fPVez
+        this.t = t
 
+    }
+
+    fun getT(): String? {
+        return t
+    }
+
+    fun setT(t: String?) {
+        this.t = t!!
+    }
+
+    fun getCPVez(): String? {
+        return cPVez
+    }
+
+    fun setCPVez(cPVez: String) {
+        this.cPVez = cPVez!!
+    }
+
+    fun getFPVez(): String? {
+        return fPVez
+    }
+
+    fun setFPVez(fPVez: String) {
+        this.fPVez = fPVez!!
     }
 
     fun getCriadorID(): String? {

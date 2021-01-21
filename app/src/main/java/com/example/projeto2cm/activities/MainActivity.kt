@@ -113,6 +113,7 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
         logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             startActivity(Intent(applicationContext, SplashScreen::class.java))
+            finish()
         }
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
@@ -166,6 +167,7 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
 
     override fun onBackPressed() {
         moveTaskToBack(true)
+        finish()
     }
 
     private fun screenRotated(savedInstanceState: Bundle?): Boolean {
@@ -211,11 +213,13 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
                         Log.e("111111", "Field: " + field.name.toString() + " Value: " + value)
 
                         STEPS = totalSteps.toLong()
-                        stepsView?.text = STEPS.toString() + " Daily Steps"
-                        stepsView2?.text = STEPS.toString() + " Daily Steps"
+                        stepsView?.text = STEPS.toString() + " Passos Diários"
+                        stepsView2?.text = STEPS.toString() + " Passos Diários"
+                        pointsView?.text = (STEPS!!.toInt() * 2).toString() + " Pontos Diários"
 
                         passosDados?.text =
-                            STEPS.toString() + " / " + progressMaxTemp!!.toInt().toString()
+                            STEPS.toString() + " / " + progressMaxTemp!!.toInt()
+                                .toString() + " Passos"
                         getDailyDistance()
                     }
             }
@@ -230,28 +234,19 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
                     val user: User? = snapshot.getValue(User::class.java)
                     var height1 = user?.getHeight().toString()
                     Log.e("height1", height1)
-                    Log.e(
-                        "height1",
-                        (height1 == "0.0" || height1 == "0" || height1 == "").toString()
-                    )
-
 
                     if (height1 == "0.0" || height1 == "0" || height1 == "") {
                         var passos = STEPS.toString().toDouble()
                         var calc: Double = (passos * (0.43 * 1.73))
                         var convertToKm: Double = calc / 1000
                         var convert =
-                            BigDecimal(convertToKm).setScale(3, RoundingMode.HALF_UP)
+                            BigDecimal(convertToKm).setScale(2, RoundingMode.HALF_UP)
                         if (convert.toFloat() < 1.0) {
                             var mapdistance = HashMap<String, Any>()
                             mapdistance["distance"] = convert.toString()
                             refUser?.updateChildren(mapdistance)
                             DISTANCE = convert.toString()
                             //distanceView?.text = DISTANCE.toString() + " Km"
-                            Log.e(
-                                "(height1 == \"0.0\" || height1 == \"0\" || height1 == \"\")",
-                                DISTANCE.toString()
-                            )
                             distanceView?.text = DISTANCE.toString() + " Km"
                         } else {
                             var convert2 = BigDecimal(convertToKm).setScale(1, RoundingMode.HALF_UP)
@@ -266,7 +261,7 @@ class MainActivity : AppCompatActivity(), OnDataPointListener, GoogleApiClient.C
                         var calc: Double = (passos * (0.43 * height1.toDouble()!!))
                         var convertToKm: Double = calc / 1000
                         var convert =
-                            BigDecimal(convertToKm).setScale(3, RoundingMode.HALF_UP)
+                            BigDecimal(convertToKm).setScale(2, RoundingMode.HALF_UP)
 
                         if (convert.toFloat() < 1.0) {
                             var mapdistance = HashMap<String, Any>()

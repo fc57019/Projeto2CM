@@ -17,25 +17,37 @@
         android:textSize="22sp"
         android:textStyle="bold" />
 
-
-    <androidx.cardview.widget.CardView
+    <LinearLayout
+        android:id="@+id/yourCircularProgressbar"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        app:cardCornerRadius="12dp">
+        android:layout_height="250dp"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp">
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/circularProgressBar"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:translationX="90dp"
+            android:translationY="25dp"
+            app:cpb_background_progressbar_color="#F2F2F2"
+            app:cpb_background_progressbar_width="20dp"
+            app:cpb_progress_direction="to_right"
+            app:cpb_progressbar_color="#F44336"
+            app:cpb_progressbar_width="15dp"
+            app:cpb_round_border="true" />
 
-            <fragment
-                android:id="@+id/mapa"
-                android:name="com.example.projeto2cm.fragments.HealthFragment2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:translationX="-55dp"
+            android:translationY="115dp" />
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -106,36 +118,6 @@
 
 
     </androidx.cardview.widget.CardView>
-
-    <LinearLayout
-        android:id="@+id/yourCircularProgressbar"
-        android:layout_width="339dp"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <com.mikhaellopez.circularprogressbar.CircularProgressBar
-            android:id="@+id/circularProgressBar"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:translationX="75dp"
-            android:translationY="25dp"
-            app:cpb_background_progressbar_color="#F2F2F2"
-            app:cpb_background_progressbar_width="20dp"
-            app:cpb_progress_direction="to_right"
-            app:cpb_progressbar_color="#F44336"
-            app:cpb_progressbar_width="15dp"
-            app:cpb_round_border="true" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:translationX="-65dp"
-            android:translationY="115dp" />
-
-
-    </LinearLayout>
 
 
 </LinearLayout>

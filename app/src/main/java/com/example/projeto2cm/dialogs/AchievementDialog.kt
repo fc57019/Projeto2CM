@@ -10,10 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -64,13 +61,12 @@ class AchievementDialog : DialogFragment() {
         LocalBroadcastManager.getInstance(context as Activity)
             .registerReceiver(mMessageReceiver, IntentFilter("participanteID"))
 
+
         radioGroup = view.findViewById(R.id.radioGroup1)
         btn = view.findViewById(R.id.apply_btn1)
         btn.setOnClickListener {
             var value = radioGroup.checkedRadioButtonId
             var rb = view.findViewById<RadioButton>(value)
-            //Toast.makeText(context, rb.text.toString(), Toast.LENGTH_SHORT).show()
-            Toast.makeText(context, participanteID, Toast.LENGTH_LONG).show()
 
             var participante = participantName
             var timeStamp: String = LocalDateTime.now().toString()
@@ -107,7 +103,10 @@ class AchievementDialog : DialogFragment() {
                                 "",
                                 "",
                                 firebaseUser!!.uid,
-                                participanteID
+                                participanteID,
+                                "1",
+                                "1",
+                                "1"
                             )
                         oldArray!!.add(newAchievement)
 
@@ -143,7 +142,10 @@ class AchievementDialog : DialogFragment() {
                             "0",
                             "0",
                             firebaseUser!!.uid,
-                            participanteID
+                            participanteID,
+                            "1",
+                            "1",
+                            "1"
                         )
                     oldArray!!.add(newAchievement)
 
@@ -156,10 +158,10 @@ class AchievementDialog : DialogFragment() {
                     TODO("Not yet implemented")
                 }
             })
+            var escolhido = view.findViewById<TextView>(R.id.escolhido)
+            escolhido.text = participantName
+            dialog!!.cancel()
         }
-
-
-
 
         recyclerViewAchievementFamilyList = view.findViewById(R.id.achievement_family)
         recyclerViewAchievementFamilyList.setHasFixedSize(true)
@@ -173,15 +175,17 @@ class AchievementDialog : DialogFragment() {
             FirebaseDatabase.getInstance().reference.child("ChatList").child(firebaseUser!!.uid)
         ref!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.e("antes do clear usersChatList", usersChatList!!.size.toString())
-                (usersChatList as ArrayList).clear()
-                Log.e("depois do clear usersChatList", usersChatList!!.size.toString())
-                for (i in snapshot.children) {
-                    val chatList = i.getValue(ChatList::class.java)
-                    (usersChatList as ArrayList).add(chatList!!)
+                if (snapshot.exists()) {
+                    Log.e("antes do clear usersChatList", usersChatList!!.size.toString())
+                    (usersChatList as ArrayList).clear()
+                    Log.e("depois do clear usersChatList", usersChatList!!.size.toString())
+                    for (i in snapshot.children) {
+                        val chatList = i.getValue(ChatList::class.java)
+                        (usersChatList as ArrayList).add(chatList!!)
+                    }
+                    Log.e("for usersChatList", usersChatList!!.size.toString())
+                    getChatList()
                 }
-                Log.e("for usersChatList", usersChatList!!.size.toString())
-                getChatList()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -212,20 +216,22 @@ class AchievementDialog : DialogFragment() {
     private fun getChatList() {
         (mUser as ArrayList<User>).clear()
         val ref = FirebaseDatabase.getInstance().reference.child("Users")
-        ref!!.addValueEventListener(object : ValueEventListener {
+        ref!!.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                (mUser as ArrayList<User>).clear()
-                for (i in snapshot.children) {
-                    val user = i.getValue(User::class.java)
-                    for (eachChatList in usersChatList!!) {
-                        if (user!!.getUID().equals(eachChatList.getId())) {
-                            (mUser as ArrayList<User>).add(user!!)
+                if (snapshot.exists()) {
+                    (mUser as ArrayList<User>).clear()
+                    for (i in snapshot.children) {
+                        val user = i.getValue(User::class.java)
+                        for (eachChatList in usersChatList!!) {
+                            if (user!!.getUID().equals(eachChatList.getId())) {
+                                (mUser as ArrayList<User>).add(user!!)
+                            }
                         }
                     }
+                    achievementFamilyAdapter =
+                        AchievementFamilyAdapter(context!!, mUser!!, true)
+                    recyclerViewAchievementFamilyList.adapter = achievementFamilyAdapter
                 }
-                achievementFamilyAdapter =
-                    AchievementFamilyAdapter(context!!, mUser!!, true)
-                recyclerViewAchievementFamilyList.adapter = achievementFamilyAdapter
             }
 
             override fun onCancelled(error: DatabaseError) {

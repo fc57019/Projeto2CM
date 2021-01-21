@@ -25,7 +25,7 @@
                 android:src="@drawable/arrow_vector" />
 
             <ImageButton
-                android:id="@+id/logout_btn"
+                android:id="@+id/logout3_btn"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -52,23 +52,27 @@
             android:textSize="22sp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/grafic_timer"
+        <TextView
+            android:id="@+id/progress_countdown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/titulo_achievement_progress"
             android:layout_centerInParent="true"
             android:layout_marginTop="16dp"
-            android:src="@mipmap/ic_launcher_round" />
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/timer_prog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/grafic_timer"
+            android:layout_below="@+id/progress_countdown"
             android:layout_centerInParent="true"
-            android:layout_marginTop="16dp"
-            android:text="Timer" />
+            android:layout_marginTop="25dp"
+            android:text="Timer"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/time_stamp_prog"
@@ -76,11 +80,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/timer_prog"
             android:layout_centerInParent="true"
-            android:layout_marginTop="16dp"
-            android:text="TimeStamp" />
+            android:layout_marginTop="40dp"
+            android:text="TimeStamp"
+            android:textStyle="italic" />
 
 
         <RelativeLayout
+            android:id="@+id/info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/time_stamp_prog"
@@ -93,7 +99,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Criador da Competicao" />
+                android:text="Criador"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/criador_da_competicao_res"
@@ -110,7 +118,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/criador_da_competicao"
                 android:layout_marginTop="16dp"
-                android:text="Steps" />
+                android:text="Passos"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/criador_steps_res"
@@ -118,9 +128,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/criador_da_competicao_res"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:layout_toRightOf="@+id/criador_steps"
-                android:text="XXXXX" />
+                android:text="'???" />
 
 
             <TextView
@@ -129,7 +139,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/criador_steps"
                 android:layout_marginTop="16dp"
-                android:text="Points" />
+                android:text="Pontos"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/criador_point_res"
@@ -137,9 +149,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/criador_steps_res"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:layout_toRightOf="@+id/criador_point"
-                android:text="XXXXX" />
+                android:text="'???" />
 
 
             <TextView
@@ -147,8 +159,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/criador_point"
-                android:layout_marginTop="20dp"
-                android:text="Family" />
+                android:layout_marginTop="30dp"
+                android:text="Familiar"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/family_da_competicao_res"
@@ -156,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/criador_point_res"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="31dp"
                 android:layout_toRightOf="@+id/family_da_competicao"
                 android:text="Tiago" />
 
@@ -166,17 +180,20 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/family_da_competicao"
                 android:layout_marginTop="16dp"
-                android:text="Steps" />
+                android:text="Passos"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
+
                 android:id="@+id/family_steps_res"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/family_da_competicao_res"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:layout_toRightOf="@+id/criador_steps"
-                android:text="XXXXX" />
+                android:text="'???" />
 
             <TextView
                 android:id="@+id/family_point"
@@ -184,7 +201,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/family_steps"
                 android:layout_marginTop="16dp"
-                android:text="Point" />
+                android:text="Pontos"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/family_point_res"
@@ -192,11 +211,25 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/family_steps_res"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:layout_toRightOf="@+id/criador_steps"
-                android:text="XXXXX" />
+                android:text="'???" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/info">
+
+            <Button
+                android:id="@+id/stop_btn"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="26dp"
+                android:text="Parar" />
+        </RelativeLayout>
 
     </RelativeLayout>
 

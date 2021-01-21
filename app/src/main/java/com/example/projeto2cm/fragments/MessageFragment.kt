@@ -51,15 +51,17 @@ class MessageFragment : Fragment() {
             FirebaseDatabase.getInstance().reference.child("ChatList").child(firebaseUser!!.uid)
         ref!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.e("antes do clear usersChatList", usersChatList!!.size.toString())
-                (usersChatList as ArrayList).clear()
-                Log.e("depois do clear usersChatList", usersChatList!!.size.toString())
-                for (i in snapshot.children) {
-                    val chatList = i.getValue(ChatList::class.java)
-                    (usersChatList as ArrayList).add(chatList!!)
+                if (snapshot.exists()) {
+                    Log.e("antes do clear usersChatList", usersChatList!!.size.toString())
+                    (usersChatList as ArrayList).clear()
+                    Log.e("depois do clear usersChatList", usersChatList!!.size.toString())
+                    for (i in snapshot.children) {
+                        val chatList = i.getValue(ChatList::class.java)
+                        (usersChatList as ArrayList).add(chatList!!)
+                    }
+                    Log.e("for usersChatList", usersChatList!!.size.toString())
+                    getChatList()
                 }
-                Log.e("for usersChatList", usersChatList!!.size.toString())
-                getChatList()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -104,17 +106,19 @@ class MessageFragment : Fragment() {
         val ref = FirebaseDatabase.getInstance().reference.child("Users")
         ref!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                (mUser as ArrayList).clear()
-                for (i in snapshot.children) {
-                    val user = i.getValue(User::class.java)
-                    for (eachChatList in usersChatList!!) {
-                        if (user!!.getUID().equals(eachChatList.getId())) {
-                            (mUser as ArrayList).add(user!!)
+                if (snapshot.exists()) {
+                    (mUser as ArrayList).clear()
+                    for (i in snapshot.children) {
+                        val user = i.getValue(User::class.java)
+                        for (eachChatList in usersChatList!!) {
+                            if (user!!.getUID().equals(eachChatList.getId())) {
+                                (mUser as ArrayList).add(user!!)
+                            }
                         }
                     }
+                    userAdapter = UserAdapter(context!!, (mUser as ArrayList<User>), true)
+                    recyclerViewChatList.adapter = userAdapter
                 }
-                userAdapter = UserAdapter(context!!, (mUser as ArrayList<User>), true)
-                recyclerViewChatList.adapter = userAdapter
             }
 
             override fun onCancelled(error: DatabaseError) {

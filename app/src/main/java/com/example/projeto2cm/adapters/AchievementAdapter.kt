@@ -2,6 +2,7 @@ package com.example.projeto2cm.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projeto2cm.R
 import com.example.projeto2cm.activities.AchievementActivity
-import com.example.projeto2cm.activities.STEPS
 import com.example.projeto2cm.entities.Achievement
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+
+var b = Bundle()
 
 class AchievementAdapter(
     private val context: Context,
@@ -56,14 +60,40 @@ class AchievementAdapter(
         holder.timeStamp.text = "$date / $hour"
 
         holder.itemView.setOnClickListener {
-
-            var temp = STEPS
+            //var temp = STEPS
             val intent = Intent(context, AchievementActivity::class.java)
             intent.putExtra("nomeCriador", achievement[position].getCriador().toString())
             intent.putExtra("nomeParticipante", achievement[position].getParticipante().toString())
             intent.putExtra("timer", achievement[position].getTimer().toString())
             intent.putExtra("timeStamp", "$date / $hour")
-            intent.putExtra("startSteps", temp)
+
+            var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+            var currentUID = firebaseUser!!.uid
+
+
+            Log.e(
+                "currentUID == achievement[position].getCriadorID().toString()",
+                (currentUID == achievement[position].getCriadorID().toString()).toString()
+            )
+            if (currentUID == achievement[position].getCriadorID().toString()) {
+                var criadorPVez = achievement[position].getCPVez()!!
+                b.putString("criadorP", criadorPVez)
+                Log.e("8", "${criadorPVez}  criadorPVez")
+            }
+
+            Log.e(
+                "currentUID == achievement[position].getFamiliarID().toString()",
+                (currentUID == achievement[position].getFamiliarID().toString()).toString()
+            )
+            if (currentUID == achievement[position].getFamiliarID().toString()) {
+                b.putString("t", achievement[position].getT())
+                var familiarPVez = achievement[position].getFPVez()!!
+                b.putString("familiarP", familiarPVez)
+                Log.e("9", "${familiarPVez}  familiarPVez")
+            }
+
+            b.putString("position", position.toString())
+            intent.putExtras(b)
 
             intent.putExtra(
                 "tipoAchievement",
@@ -81,7 +111,7 @@ class AchievementAdapter(
             Log.e("2", "${achievement[position].getParticipante().toString()}  nomeParticipante")
             Log.e("3", "${achievement[position].getTimer().toString()}  timer")
             Log.e("4", "$date / $hour  timeStamp")
-            Log.e("5", "$temp  startSteps")
+            //Log.e("5", "$temp  startSteps")
             Log.e("6", "${achievement[position].getCriadorID().toString()}  criadorID")
             Log.e("7", "${achievement[position].getFamiliarID().toString()}  familiarID")
             context.startActivity(intent)

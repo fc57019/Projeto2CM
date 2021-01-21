@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
-                    android:text="30 Minutos | 6 Pontos"
+                    android:text="30 Minutos | 6 Pontos por Passo"
                     android:textColor="?android:colorBackground"
                     android:textSize="14dp" />
 
@@ -101,7 +101,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
-                    android:text="1 Hora  | 6 Pontos"
+                    android:text="1 Hora  | 6 Pontos por Passo"
                     android:textColor="?android:colorBackground"
                     android:textSize="14dp" />
 
@@ -128,7 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="1h:30m | 6 Pontos"
+                    android:text="1h:30m | 6 Pontos por Passo"
                     android:textColor="?android:colorBackground"
                     android:textSize="14dp" />
 
@@ -176,7 +176,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
-                android:text="500 Passos | 2 Pontos"
+                android:text="1 Passo | 2 Ponto"
                 android:textColor="?android:colorBackground"
                 android:textSize="14dp" />
 
@@ -221,7 +221,7 @@
 
 
                 <TextView
-                    android:id="@+id/text1"
+                    android:id="@+id/pontos"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_marginLeft="10dp"
@@ -267,40 +267,6 @@
 
                 <ImageView
                     android:id="@+id/image2_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/share_vector" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:id="@+id/image3"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginRight="2dp"
-                    android:src="@drawable/feet" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/image3"
-                    android:gravity="center_vertical"
-                    android:text="0 Passos Semamais"
-                    android:textColor="?android:colorBackground"
-                    android:textSize="14dp" />
-
-                <ImageView
-                    android:id="@+id/image3_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

@@ -112,10 +112,18 @@ class ChatActivity : AppCompatActivity() {
         }
         seenMessage(userIdVisit)
 
+
         val logout: ImageButton = findViewById(R.id.logout_btn)
         logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             startActivity(Intent(applicationContext, SplashScreen::class.java))
+            finish()
+        }
+
+        val btnBack: ImageButton = findViewById(R.id.back_btn2)
+        btnBack.setOnClickListener {
+            startActivity(Intent(applicationContext, MainActivity::class.java))
+            finish()
         }
 
     }

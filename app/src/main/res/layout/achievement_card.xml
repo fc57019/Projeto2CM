@@ -60,7 +60,7 @@
                 android:layout_below="@+id/titulo_criador"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
-                android:text="Family"
+                android:text="Familiar"
                 android:textColor="?android:colorBackground"
                 android:textStyle="bold" />
 

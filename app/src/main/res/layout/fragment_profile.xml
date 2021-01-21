@@ -181,7 +181,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
-                        android:hint="Altura cm"
+                        android:hint="Altura m"
                         app:endIconMode="clear_text"
                         app:errorEnabled="true"
                         app:helperTextEnabled="true"

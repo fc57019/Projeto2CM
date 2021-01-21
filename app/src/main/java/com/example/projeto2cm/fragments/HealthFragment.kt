@@ -30,7 +30,7 @@ class HealthFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_health, container, false)
 
         stepsView2 = view.findViewById(R.id.daily_steps_2)
-        stepsView2?.text = STEPS.toString() + " Daily Steps"
+        stepsView2?.text = STEPS.toString() + " Passos Diários"
 
         distanceView = view.findViewById(R.id.distance_view)
         distanceView?.text = DISTANCE.toString() + " Km"
@@ -63,7 +63,8 @@ class HealthFragment : Fragment() {
 
                         progressMaxTemp = progressMax
                         passosDados?.text =
-                            STEPS.toString() + " / " + progressMaxTemp!!.toInt().toString()
+                            STEPS.toString() + " / " + progressMaxTemp!!.toInt()
+                                .toString() + " Passos"
                     }
                     println(STEPS)
                     STEPS?.toFloat()?.let { setProgressWithAnimation(it, 1000) }

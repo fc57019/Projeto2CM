@@ -23,6 +23,7 @@ import com.google.firebase.database.*
 
 
 var stepsView: TextView? = null
+var pointsView: TextView? = null
 var teste: Int = 1
 var stepsView2: TextView? = null
 var distanceView: TextView? = null
@@ -82,11 +83,11 @@ class HomeFragment : Fragment() {
 
 
 
-
-
-
         stepsView = view.findViewById(R.id.daily_steps)
-        stepsView?.text = STEPS.toString() + " Daily Steps"
+        stepsView?.text = STEPS.toString() + " Passos Diários"
+
+        pointsView = view.findViewById(R.id.pontos)
+        pointsView?.text = (STEPS!!.toInt() * 2).toString() + " Pontos Diários"
 
         return view
     }
